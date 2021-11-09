@@ -35,4 +35,9 @@ export class DistillationPlanService {
   public delete(distillationPlan: DistillationPlan) {
     return this.http.delete<DistillationPlan>(this.plansUrl + '/' + distillationPlan.id);
   }
+
+
+  public terminate(distillationPlan: DistillationPlan) {
+    return this.http.post<DistillationPlan>(this.plansUrl + '/terminate', distillationPlan);
+  }
 }

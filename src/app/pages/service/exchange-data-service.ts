@@ -22,4 +22,8 @@ export class ExchangeDataService {
     exchangeData.timestamp = Date.now();
     return this.http.post<ExchangeData>(this.exchangeDataUrl, exchangeData);
   }
+
+  public deleteAll() {
+    return this.http.delete(this.exchangeDataUrl);
+  }
 }

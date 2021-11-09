@@ -43,12 +43,12 @@ export class DistillationProcessComponent implements OnInit {
   flipped = false;
 
   constructor(
-      private toastrService: NbToastrService,
-      private dialogService: NbDialogService,
-      private router: Router,
-      private exchangeDataService: ExchangeDataService,
-      private distillationPlanService: DistillationPlanService,
-      private distillationPhaseService: DistillationPhaseService,
+    private toastrService: NbToastrService,
+    private dialogService: NbDialogService,
+    private router: Router,
+    private exchangeDataService: ExchangeDataService,
+    private distillationPlanService: DistillationPlanService,
+    private distillationPhaseService: DistillationPhaseService,
   ) {
     this.isExchangeDataLoaded = false;
     this.isPhaseLoaded = false;
@@ -82,28 +82,29 @@ export class DistillationProcessComponent implements OnInit {
       this.exchangeData = data;
       this.isExchangeDataLoaded = true;
 
-      if (elapsed > 2000 && (this.distillationPlan.name !== undefined && (this.exchangeData.terminate === true
-          && this.exchangeData.waiting === false
-          && this.exchangeData.turnOn === false
-      )) || (this.currentPhaseIdPosition === this.distillationPlan.distillationPhases.length - 1
-          && this.timeLeftMinutes < 1 && this.timeLeftSeconds < 1)) {
+      if (elapsed > 2000 && (this.exchangeData.terminate === true
+        && this.exchangeData.waiting === false
+        && this.exchangeData.turnOn === false
+      ) || (this.currentPhaseIdPosition === this.distillationPlan.distillationPhases.length - 1
+        && this.timeLeftMinutes < 1 && this.timeLeftSeconds < 1)) {
         clearInterval(this.interval);
         distillationFinished = true;
         this.terminateDistillationProcess();
+        this.exchangeDataService.deleteAll().subscribe();
         setTimeout(() => {
-              this.gotoDistillationPlanList();
-            },
-            2500);
+            this.gotoDistillationPlanList();
+          },
+          2500);
         return;
       }
       if (elapsed > 2000 && (this.exchangeData === undefined
-          || this.exchangeData.terminate === true && !distillationFinished)) {
+        || this.exchangeData.terminate === true && !distillationFinished)) {
         this.makeNoPlanInProgressToastAndGoToPlanList();
         setTimeout(() => {
-              clearInterval(this.interval);
-              this.gotoDistillationPlanList();
-            },
-            2500);
+            clearInterval(this.interval);
+            this.gotoDistillationPlanList();
+          },
+          2500);
         return;
       }
     });
@@ -115,27 +116,27 @@ export class DistillationProcessComponent implements OnInit {
       if (elapsed > 2000) {
         this.makeNoPlanInProgressToastAndGoToPlanList();
         setTimeout(() => {
-              clearInterval(this.interval);
-              this.gotoDistillationPlanList();
-            },
-            2500);
+            clearInterval(this.interval);
+            this.gotoDistillationPlanList();
+          },
+          2500);
       }
     }
     this.distillationPlanService.get(this.exchangeData.planId).subscribe(data => {
       this.distillationPlan = data;
       this.currentPhaseIdPosition = this.distillationPlan.distillationPhases.map(
-          item => item.id).indexOf(this.exchangeData.currentPhaseId);
+        item => item.id).indexOf(this.exchangeData.currentPhaseId);
       this.timeElapsedMinutes = this.exchangeData.timeElapsed / 1000 / 60;
       this.timeElapsedSeconds = this.exchangeData.timeElapsed / 1000 % 60;
       const presetTime = this.distillationPlan.distillationPhases[this.currentPhaseIdPosition].time;
       this.timePresetMinutes = presetTime;
       this.timePresetSeconds = presetTime % 60;
       this.timeLeftMinutes = (this.distillationPlan.distillationPhases[this.currentPhaseIdPosition]).time
-          - (this.exchangeData.timeElapsed / 1000 / 60);
+        - (this.exchangeData.timeElapsed / 1000 / 60);
       this.timeLeftSeconds = (this.timeLeftMinutes * 60) % 60;
       this.isPhaseLoaded = true;
       this.progress = Math.round((this.exchangeData.timeElapsed / 1000)
-          / (((this.distillationPlan.distillationPhases[this.currentPhaseIdPosition]).time * 60) / 100));
+        / (((this.distillationPlan.distillationPhases[this.currentPhaseIdPosition]).time * 60) / 100));
     });
   }
 
@@ -162,10 +163,10 @@ export class DistillationProcessComponent implements OnInit {
     clearInterval(this.interval);
     this.makeFinishToastAndGoToFinishPage();
     setTimeout(() => {
-          this.exchangeDataService.updateExchangeData(terminateExchangeData).subscribe(
-              (result => this.router.navigate(['/pages/distillation-finished'])));
-        },
-        2500);
+        this.exchangeDataService.updateExchangeData(terminateExchangeData).subscribe(
+          (result => this.router.navigate(['/pages/distillation-finished'])));
+      },
+      2500);
     return;
   }
 
@@ -179,6 +180,11 @@ export class DistillationProcessComponent implements OnInit {
 
   jumpToNextPhase() {
     this.distillationPhaseService.jumpToNextPhase(this.distillationPlan).subscribe();
+    this.toggleView();
+  }
+
+  terminateDistillationPlan() {
+    this.distillationPlanService.terminate(this.distillationPlan).subscribe();
     this.toggleView();
   }
 
@@ -215,8 +221,8 @@ export class DistillationProcessComponent implements OnInit {
 
     this.index += 1;
     this.toastrService.show(
-        body,
-        `${titleContent}`,
-        config);
+      body,
+      `${titleContent}`,
+      config);
   }
 }

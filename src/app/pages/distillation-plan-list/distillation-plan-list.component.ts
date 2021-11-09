@@ -7,7 +7,7 @@ import {CustomRenderComponent} from './custom-render.component';
 import {CustomActionRenderComponent} from './custom-action-render.component';
 import {CustomTextareaRenderComponent} from './custom-textarea-render.component';
 import {DialogNamePromptComponent} from '../../@theme/modal-overlays/dialog/dialog-name-prompt/dialog-name-prompt.component';
-import {NbComponentStatus, NbDialogService, NbGlobalPhysicalPosition, NbToastrService,} from '@nebular/theme';
+import {NbComponentStatus, NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
 
 @Component({
   selector: 'ngx-app-distillation-list',
