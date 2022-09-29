@@ -1,0 +1,23 @@
+<nb-card>
+  <nb-card-header class="row">
+    <h1 class="col-md-11 align-self-center">
+      Distillation Plans
+    </h1>
+    <div class="col-md-1 align-self-center">
+      <button (click)="createDistillationPlan()"
+              aria-disabled="false"
+              type="submit" ngcontent-bfe-c444="" nbbutton="" outline="" ng-reflect-outline=""
+              class="status-success appearance-outline size-medium shape-rectangle ng-star-inserted nb-transition"
+              nbTooltip="Create a new distillation plan" nbTooltipPlacement="top"
+              nbTooltipStatus="success"
+              ng-reflect-status="success" tabindex="0" type="submit">
+        <i class="nb-plus" style="font-size:40px"></i>
+      </button>
+    </div>
+
+  </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,230 @@
+<nb-flip-card [flipped]="flipped" [showToggleButton]="false">
+  <nb-card-front *ngIf="isPhaseLoaded" >
+    <nb-card size="giant">
+      <nb-card-header class="row">
+        <h1 class="col-md-11 align-self-center">
+          Distillation plan in progress
+        </h1>
+        <div class="col-md-1 align-self-center">
+          <button (click)="gotoDistillationPlanList()"
+                  aria-disabled="false"
+                  class="status-danger appearance-outline size-medium shape-rectangle ng-star-inserted nb-transition"
+                  nbbutton="" ng-reflect-outline="" ng-reflect-status="danger"
+                  ngcontent-bfe-c444=""
+                  outline="" tabindex="0"
+                  type="submit">
+            <i class="nb-close" style="font-size:40px"></i>
+          </button>
+        </div>
+      </nb-card-header>
+
+      <nb-card-body>
+        <nb-icon (click)="toggleView()" class="flip-icon" icon="chevron-right-outline" pack="eva"
+                 style="font-size:50px"></nb-icon>
+        <nb-card class="actions-card" style="margin-top: 5%">
+          <nb-card-body>
+            <form class="ng-untouched ng-pristine ng-valid" novalidate="">
+              <div class="form-group">
+                <label class="label">Plan Name</label>
+                <input class="input-full-width size-medium status-info shape-rectangle nb-transition" fullwidth=""
+                       nbinput=""
+                       ng-reflect-full-width=""
+                       ng-reflect-status="info"
+                       readonly="true "
+                       value="{{distillationProcessDataToFrontendDto.distillationPlanDto.name}}">
+              </div>
+              <div class="form-group">
+                <label class="label">Current Phase Name</label>
+                <input class="input-full-width size-medium status-info shape-rectangle nb-transition" fullwidth=""
+                       nbinput=""
+                       ng-reflect-full-width=""
+                       ng-reflect-status="info"
+                       readonly="true "
+                       value="{{distillationProcessDataToFrontendDto.currentDistillationPhaseDto.name}}">
+              </div>
+              <div class="form-group">
+                <label class="label">Temperature</label>
+                <input class="input-full-width size-medium status-info shape-rectangle nb-transition" fullwidth=""
+                       nbinput=""
+                       ng-reflect-full-width=""
+                       ng-reflect-status="info"
+                       readonly="true "
+                       value="{{distillationProcessDataToFrontendDto.temperature | number:'1.1-2'}} °C">
+              </div>
+              <div class="form-group">
+                <label class="label">Flow</label>
+                <input class="input-full-width size-medium status-info shape-rectangle nb-transition" fullwidth=""
+                       nbinput=""
+                       ng-reflect-full-width=""
+                       ng-reflect-status="info"
+                       readonly="true "
+                       value="{{distillationProcessDataToFrontendDto.flow | number:'1.1-2'}} ml/h">
+              </div>
+              <div class="form-group">
+                <label class="label">Weight</label>
+                <input class="input-full-width size-medium status-info shape-rectangle nb-transition" fullwidth=""
+                       nbinput=""
+                       ng-reflect-full-width=""
+                       ng-reflect-status="info"
+                       readonly="true "
+                       value="{{distillationProcessDataToFrontendDto.weight | number:'1.1-2'}} grams">
+              </div>
+              <div class="form-group">
+                <label class="label">% Alc</label>
+                <input class="input-full-width size-medium status-info shape-rectangle nb-transition" fullwidth=""
+                       nbinput=""
+                       ng-reflect-full-width=""
+                       ng-reflect-status="info"
+                       readonly="true "
+                       value="{{distillationProcessDataToFrontendDto.alcLevel| number:'1.1-2'}}">
+              </div>
+              <div class="form-group">
+                <label class="label">Time elapsed</label>
+                <input class="input-full-width size-medium status-info shape-rectangle nb-transition" fullwidth=""
+                       nbinput=""
+                       ng-reflect-full-width=""
+                       ng-reflect-status="info"
+                       readonly="true "
+                       value="{{(timeElapsedMinutes - timeElapsedMinutes % 1) | number:'1.0-0'}} minutes {{timeElapsedSeconds | number:'1.0-0'}} seconds">
+              </div>
+              <div class="form-group">
+                <label class="label">Energy ON</label>
+                <input class="input-full-width size-medium status-success shape-rectangle nb-transition" fullwidth=""
+                       nbinput=""
+                       ng-reflect-full-width=""
+                       ng-reflect-status="info"
+                       readonly="true "
+                       value="{{distillationProcessDataToFrontendDto.energyOn}}">
+              </div>
+              <div class="form-group">
+                <label class="label">Waiting</label>
+                <input class="input-full-width size-medium status-warning shape-rectangle nb-transition" fullwidth=""
+                       nbinput=""
+                       ng-reflect-full-width=""
+                       ng-reflect-status="warning"
+                       readonly="true "
+                       value="{{distillationProcessDataToFrontendDto.paused}}">
+              </div>
+              <div class="form-group">
+                <label class="label">Terminated</label>
+                <input class="input-full-width size-medium status-danger shape-rectangle nb-transition" fullwidth=""
+                       nbinput=""
+                       ng-reflect-full-width=""
+                       ng-reflect-status="danger"
+                       readonly="true "
+                       value="{{distillationProcessDataToFrontendDto.terminated}}">
+              </div>
+            </form>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-front>
+
+  <nb-card-back *ngIf="isPhaseLoaded" >
+    <nb-card size="giant">
+      <nb-card-header class="row">
+        <h1 class="col-md-11 align-self-center">
+          Setting of the distillation
+        </h1>
+        <div class="col-md-1 align-self-center">
+          <button (click)="gotoDistillationPlanList()"
+                  aria-disabled="false"
+                  class="status-danger appearance-outline size-medium shape-rectangle ng-star-inserted nb-transition"
+                  nbbutton="" ng-reflect-outline="" ng-reflect-status="danger"
+                  ngcontent-bfe-c444=""
+                  outline="" tabindex="0"
+                  type="submit">
+            <i class="nb-close" style="font-size:40px"></i>
+          </button>
+        </div>
+      </nb-card-header>
+
+      <nb-card-body>
+        <nb-icon (click)="toggleView()" class="flip-icon" icon="chevron-right-outline" pack="eva"
+                 style="font-size:50px"></nb-icon>
+        <nb-card class="actions-card" style="margin-top: 5%">
+          <nb-card-body>
+            <div class="info" style="margin-top: 5%">
+              <div class="form-group">
+                <label class="label">Current Phase Name</label>
+                <input class="input-full-width size-medium status-info shape-rectangle nb-transition" fullwidth=""
+                       nbinput=""
+                       ng-reflect-full-width=""
+                       ng-reflect-status="info"
+                       readonly="true "
+                       value="{{distillationProcessDataToFrontendDto.currentDistillationPhaseDto.name}}">
+              </div>
+              <div>
+                <label class="label">Preset temperature</label>
+                <input class="input-full-width size-medium status-info shape-rectangle nb-transition" fullwidth=""
+                       nbinput=""
+                       ng-reflect-full-width=""
+                       ng-reflect-status="info"
+                       readonly="true "
+                       value="{{distillationProcessDataToFrontendDto.currentDistillationPhaseDto.temperature | number:'1.1-1'}} °C">
+              </div>
+              <div>
+                <label class="label">Preset flow</label>
+                <input class="input-full-width size-medium status-info shape-rectangle nb-transition" fullwidth=""
+                       nbinput=""
+                       ng-reflect-full-width=""
+                       ng-reflect-status="info"
+                       readonly="true "
+                       value="{{distillationProcessDataToFrontendDto.currentDistillationPhaseDto.flow | number:'1.1-1'}} ml/h">
+              </div>
+              <div>
+                <label class="label">Preset time</label>
+                <input class="input-full-width size-medium status-info shape-rectangle nb-transition" fullwidth=""
+                       nbinput=""
+                       ng-reflect-full-width=""
+                       ng-reflect-status="info"
+                       readonly="true "
+                       value="{{(distillationProcessDataToFrontendDto.currentDistillationPhaseDto.time / 1000 / 60) | number:'1.0-0'}} minutes">
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+        <nb-card>
+          <div class="container" class="row text-center">
+            <div class="align-items-start" class="col-sm">
+              <button (click)="jumpToNextPhase()" aria-disabled="false"
+                      class="appearance-filled size-medium shape-rectangle status-info nb-transition" nbbutton=""
+                      ng-reflect-status="success" status="warning"
+                      tabindex="0"
+                      type="submit">
+                <p style="font-size:40px">JUMP TO THE NEXT PHASE</p>
+              </button>
+            </div>
+            <!--            <div class="align-items-start" class="col-sm">-->
+            <!--              <button (click)="pauseDistillationProcess()" aria-disabled="false"-->
+            <!--                      class="appearance-filled size-medium shape-rectangle status-warning nb-transition" nbbutton=""-->
+            <!--                      ng-reflect-status="warning" status="warning"-->
+            <!--                      tabindex="0"-->
+            <!--                      type="submit">-->
+            <!--                <p style="font-size:40px">PAUSE</p>-->
+            <!--              </button>-->
+            <!--            </div>-->
+            <div class="align-items-end" class="col-sm">
+              <button (click)="terminateDistillationPlan()" aria-disabled="false"
+                      class="appearance-filled size-medium shape-rectangle status-danger nb-transition"
+                      nbbutton="" ng-reflect-status="danger"
+                      status="danger"
+                      tabindex="0">
+                <p style="font-size:40px">TERMINATE</p>
+              </button>
+            </div>
+          </div>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-back>
+</nb-flip-card>
+
+<nb-card>
+  <nb-card-body>
+    <div class="container">
+      <nb-progress-bar [displayValue]="true" [status]="status" [value]="progress"></nb-progress-bar>
+    </div>
+  </nb-card-body>
+</nb-card>
