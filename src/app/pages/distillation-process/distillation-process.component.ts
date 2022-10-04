@@ -1,18 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {DistillationPlan} from '../model/distillationPlan';
 import {DistillationProcessDataToFrontendDto} from '../model/distillationProcessDataToFrontendDto';
 import {DistillationPlanService} from '../service/distillation-plan.service';
-import {DistillationPhaseService} from '../service/distillation-phase.service';
 import {Router} from '@angular/router';
 import 'reflect-metadata';
 
-import {
-    NbComponentStatus,
-    NbDialogService,
-    NbGlobalPhysicalPosition,
-    NbGlobalPosition,
-    NbToastrService,
-} from '@nebular/theme';
+import {NbComponentStatus, NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
 import {WebSocketAPI} from './WebSocketAPI';
 
 @Component({
@@ -44,7 +36,6 @@ export class DistillationProcessComponent implements OnInit {
         private dialogService: NbDialogService,
         private router: Router,
         private distillationPlanService: DistillationPlanService,
-        private distillationPhaseService: DistillationPhaseService,
     ) {
         this.isPhaseLoaded = false;
     }
@@ -96,7 +87,7 @@ export class DistillationProcessComponent implements OnInit {
         const timeStarted: number = Date.now();
         this.interval = setInterval(() => {
             this.refreshData(timeStarted);
-        }, 3000);
+        }, 1000);
     }
 
     refreshData(timeStarted: number) {
@@ -136,7 +127,7 @@ export class DistillationProcessComponent implements OnInit {
     }
 
     jumpToNextPhase() {
-        this.distillationPhaseService.jumpToNextPhase(this.distillationProcessDataToFrontendDto.distillationPlanDto).subscribe();
+        this.distillationPlanService.jumpToNextPhase(this.distillationProcessDataToFrontendDto.distillationPlanDto).subscribe();
         this.toggleView();
     }
 

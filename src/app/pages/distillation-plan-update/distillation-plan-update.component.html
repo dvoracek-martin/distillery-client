@@ -1,11 +1,10 @@
 <div class="steppers-container row">
-    <p>{{distillationPlanToEdit.name}}</p>
     <div class="col-md-12 col-lg-12 col-xxxl-12">
         <nb-card>
 
             <nb-card-header class="row">
                 <h1 class="col-md-11 align-self-center">
-                    Edit a distillation plan
+                    Edit a distillation plan {{distillationPlanToEdit.name}}
                 </h1>
                 <div class="col-md-1 align-self-center">
                     <button (click)="gotoDistillationPlanList()"

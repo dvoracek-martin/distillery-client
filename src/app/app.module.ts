@@ -15,7 +15,6 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
-import {DistillationPhaseService} from './pages/service/distillation-phase.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,7 +34,6 @@ import {DistillationPhaseService} from './pages/service/distillation-phase.servi
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
-    DistillationPhaseService,
   ],
   bootstrap: [AppComponent],
 })

@@ -6,37 +6,41 @@ import {Observable} from 'rxjs/Observable';
 @NgModule()
 export class DistillationPlanService {
 
-  private readonly plansUrl: string;
+    private readonly planUrl: string;
 
-  constructor(private http: HttpClient) {
-    this.plansUrl = 'http://localhost:8080/api/plan';
-  }
+    constructor(private http: HttpClient) {
+        this.planUrl = 'http://localhost:8080/api/plan';
+    }
 
-  public findAll(): Observable<DistillationPlan[]> {
-    return this.http.get<DistillationPlan[]>(this.plansUrl + '/getAll');
-  }
+    public findAll(): Observable<DistillationPlan[]> {
+        return this.http.get<DistillationPlan[]>(this.planUrl + '/getAll');
+    }
 
-  public get(distillationPlanId: number): Observable<DistillationPlan> {
-    return this.http.get<DistillationPlan>(this.plansUrl + '/' + distillationPlanId);
-  }
+    public get(distillationPlanId: number): Observable<DistillationPlan> {
+        return this.http.get<DistillationPlan>(this.planUrl + '/' + distillationPlanId);
+    }
 
-  public start(distillationPlan: DistillationPlan): Observable<DistillationPlan[]> {
-    return this.http.post<DistillationPlan[]>(this.plansUrl + '/start', distillationPlan);
-  }
+    public start(distillationPlan: DistillationPlan): Observable<DistillationPlan[]> {
+        return this.http.post<DistillationPlan[]>(this.planUrl + '/start', distillationPlan);
+    }
 
-  public save(distillationPlan: DistillationPlan) {
-    return this.http.post<DistillationPlan>(this.plansUrl, distillationPlan);
-  }
+    public save(distillationPlan: DistillationPlan) {
+        return this.http.post<DistillationPlan>(this.planUrl, distillationPlan);
+    }
 
-  public update(distillationPlan: DistillationPlan) {
-    return this.http.put<DistillationPlan>(this.plansUrl + '/' + distillationPlan.id, distillationPlan);
-  }
+    public update(distillationPlan: DistillationPlan) {
+        return this.http.put<DistillationPlan>(this.planUrl + '/' + distillationPlan.id, distillationPlan);
+    }
 
-  public delete(distillationPlan: DistillationPlan) {
-    return this.http.delete<DistillationPlan>(this.plansUrl + '/' + distillationPlan.id);
-  }
+    public delete(distillationPlan: DistillationPlan) {
+        return this.http.delete<DistillationPlan>(this.planUrl + '/' + distillationPlan.id);
+    }
 
-  public terminate(distillationPlan: DistillationPlan) {
-    return this.http.post<DistillationPlan>(this.plansUrl + '/terminate', distillationPlan);
-  }
+    public terminate(distillationPlan: DistillationPlan) {
+        return this.http.post<DistillationPlan>(this.planUrl + '/terminate', distillationPlan);
+    }
+
+    public jumpToNextPhase(distillationPlan: DistillationPlan): Observable<DistillationPlan[]> {
+        return this.http.post<DistillationPlan[]>(this.planUrl + '/next', distillationPlan);
+    }
 }
