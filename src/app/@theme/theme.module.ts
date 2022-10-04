@@ -17,25 +17,10 @@ import {NbEvaIconsModule} from '@nebular/eva-icons';
 import {NbSecurityModule} from '@nebular/security';
 
 
-import {
-  FooterComponent,
-  HeaderComponent,
-  SearchInputComponent,
-  TinyMCEComponent,
-} from './components';
-import {
-  CapitalizePipe,
-  NumberWithCommasPipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-} from './pipes';
-import {
-  OneColumnLayoutComponent,
-  ThreeColumnsLayoutComponent,
-  TwoColumnsLayoutComponent,
-} from './layouts';
-import {DARK_THEME} from './styles/theme.dark';
+import {FooterComponent, HeaderComponent, SearchInputComponent, TinyMCEComponent,} from './components';
+import {CapitalizePipe, NumberWithCommasPipe, PluralPipe, RoundPipe, TimingPipe,} from './pipes';
+import {OneColumnLayoutComponent, ThreeColumnsLayoutComponent, TwoColumnsLayoutComponent,} from './layouts';
+import {DEFAULT_THEME} from './styles/theme.default';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -80,9 +65,9 @@ export class ThemeModule {
       providers: [
         ...NbThemeModule.forRoot(
           {
-            name: 'dark',
+            name: 'default',
           },
-          [DARK_THEME],
+          [DEFAULT_THEME],
         ).providers,
       ],
     };
