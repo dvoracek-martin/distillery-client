@@ -9,21 +9,25 @@ import {DistillationPlanFormModule} from './distillation-plan-form/distillation-
 import {DistillationPlanUpdateModule} from './distillation-plan-update/distillation-plan-update.module';
 import {DistillationProcessModule} from './distillation-process/distillation-process.module';
 import {DistillationPlanListModule} from './distillation-plan-list/distillation-plan-list.module';
+import {DistillationProcedureListModule} from './distillation-procedure-list/distillation-procedure-list.module';
+import {DistillationProcedureService} from './service/distillation-procedure.service';
 
 @NgModule({
-  imports: [
-    PagesRoutingModule,
-    ThemeModule,
-    NbMenuModule,
-    DistillationPlanService,
-    DistillationPlanFormModule,
-    DistillationPlanUpdateModule,
-    DistillationProcessModule,
-    DistillationPlanListModule,
-  ],
-  declarations: [
-    PagesComponent,
-  ],
+    imports: [
+        PagesRoutingModule,
+        ThemeModule,
+        NbMenuModule,
+        DistillationPlanService,
+        DistillationPlanFormModule,
+        DistillationPlanUpdateModule,
+        DistillationProcessModule,
+        DistillationPlanListModule,
+        DistillationProcedureListModule,
+        DistillationProcedureService,
+    ],
+    declarations: [
+        PagesComponent,
+    ],
 })
 export class PagesModule {
 }

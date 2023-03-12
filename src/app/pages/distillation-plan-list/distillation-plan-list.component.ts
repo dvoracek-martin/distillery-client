@@ -8,8 +8,8 @@ import {CustomActionRenderComponent} from './custom-action-render.component';
 import {CustomTextareaRenderComponent} from './custom-textarea-render.component';
 import {NbComponentStatus, NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
 import {
-    DialogNamePromptComponent,
-} from '../../@theme/modal-overlays/dialog/dialog-name-prompt/dialog-name-prompt.component';
+    DialogPlanPromptComponent
+} from '../../@theme/modal-overlays/dialog/dialog-plan-prompt/dialog-plan-prompt.component';
 
 @Component({
     selector: 'ngx-app-distillation-list',
@@ -83,7 +83,7 @@ export class DistillationPlanListComponent implements OnInit {
     }
 
     openDeleteDialog(distillationPlan: DistillationPlan) {
-        this.dialogService.open(DialogNamePromptComponent)
+        this.dialogService.open(DialogPlanPromptComponent)
             .onClose.subscribe(state => {
             if (state === ('success')) {
                 this.distillationPlanService.delete(distillationPlan).subscribe(

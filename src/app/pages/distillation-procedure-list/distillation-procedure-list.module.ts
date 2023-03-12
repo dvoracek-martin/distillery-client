@@ -1,22 +1,23 @@
 import {NgModule} from '@angular/core';
-
-import {CustomRenderComponent} from './custom-render.component';
 import {CustomActionRenderComponent} from './custom-action-render.component';
-import {DistillationPlanListComponent} from './distillation-plan-list.component';
+import {DistillationProcedureListComponent} from './distillation-procedure-list.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {NbActionsModule, NbCardModule, NbIconModule, NbSearchModule, NbTooltipModule} from '@nebular/theme';
-import {CustomTextareaRenderComponent} from './custom-textarea-render.component';
+import {CustomDateTimeEndRenderComponent} from './custom-date-time-end-render.component';
+import {CustomDateTimeStartRenderComponent} from './custom-date-time-start-render.component';
 import {
-    DialogPlanPromptComponent
-} from '../../@theme/modal-overlays/dialog/dialog-plan-prompt/dialog-plan-prompt.component';
+    DialogProcedurePromptComponent
+} from '../../@theme/modal-overlays/dialog/dialog-procedure-prompt/dialog-procedure-prompt.component';
+import {CustomEndReasonRenderComponent} from './custom-end-reason-render.component';
 
 
 const RENDERERS = [
-    CustomRenderComponent,
     CustomActionRenderComponent,
-    CustomTextareaRenderComponent,
+    CustomDateTimeEndRenderComponent,
+    CustomDateTimeStartRenderComponent,
+    CustomEndReasonRenderComponent,
 ];
 
 @NgModule({
@@ -36,10 +37,11 @@ const RENDERERS = [
         RENDERERS,
     ],
     declarations: [
-        DistillationPlanListComponent,
-        DialogPlanPromptComponent,
+        DistillationProcedureListComponent,
+        DialogProcedurePromptComponent,
         RENDERERS,
     ],
 })
-export class DistillationPlanListModule {
+
+export class DistillationProcedureListModule {
 }
