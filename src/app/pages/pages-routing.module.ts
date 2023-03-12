@@ -8,6 +8,9 @@ import {DistillationPlanUpdateComponent} from './distillation-plan-update/distil
 import {DistillationProcessComponent} from './distillation-process/distillation-process.component';
 import {DistillationPlanListComponent} from './distillation-plan-list/distillation-plan-list.component';
 import {DistillationProcedureListComponent} from './distillation-procedure-list/distillation-procedure-list.component';
+import {
+    DistillationProcedureDetailComponent
+} from './distillation-procedure-detail/distillation-procedure-detail.component';
 
 const routes: Routes = [{
     path: '',
@@ -32,6 +35,10 @@ const routes: Routes = [{
         {
             path: 'distillation-procedure-list',
             component: DistillationProcedureListComponent,
+        },
+        {
+            path: 'procedure-detail',
+            component: DistillationProcedureDetailComponent,
         },
         {
             path: 'miscellaneous',

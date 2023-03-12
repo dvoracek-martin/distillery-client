@@ -11,6 +11,7 @@ import {DistillationProcessModule} from './distillation-process/distillation-pro
 import {DistillationPlanListModule} from './distillation-plan-list/distillation-plan-list.module';
 import {DistillationProcedureListModule} from './distillation-procedure-list/distillation-procedure-list.module';
 import {DistillationProcedureService} from './service/distillation-procedure.service';
+import {DistillationProcedureDetailModule} from './distillation-procedure-detail/distillation-procedure-detail.module';
 
 @NgModule({
     imports: [
@@ -24,6 +25,7 @@ import {DistillationProcedureService} from './service/distillation-procedure.ser
         DistillationPlanListModule,
         DistillationProcedureListModule,
         DistillationProcedureService,
+        DistillationProcedureDetailModule,
     ],
     declarations: [
         PagesComponent,
