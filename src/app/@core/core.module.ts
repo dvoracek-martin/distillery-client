@@ -5,12 +5,7 @@ import {NbRoleProvider, NbSecurityModule} from '@nebular/security';
 import {of as observableOf} from 'rxjs';
 
 import {throwIfAlreadyLoaded} from './module-import-guard';
-import {
-    AnalyticsService,
-    LayoutService,
-    SeoService,
-    StateService,
-} from './utils';
+import {AnalyticsService, LayoutService, SeoService, StateService} from './utils';
 import {TemperatureHumidityData} from './data/temperature-flow-time';
 import {TemperatureFlowTimeService} from './mock/temperature-flow-time.service';
 

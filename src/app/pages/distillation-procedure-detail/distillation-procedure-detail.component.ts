@@ -1,9 +1,19 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TemperatureHumidityData} from '../../@core/data/temperature-flow-time';
-import {NbComponentStatus, NbGlobalPhysicalPosition, NbThemeService, NbToastrService} from '@nebular/theme';
+import {
+    NbComponentStatus,
+    NbGlobalPhysicalPosition,
+    NbMediaBreakpointsService,
+    NbThemeService,
+    NbToastrService,
+} from '@nebular/theme';
 import {DistillationProcedure} from '../model/distillationProcedure';
 import {DistillationProcedureService} from '../service/distillation-procedure.service';
+import {OrderProfitChartSummary} from '../../@core/data/orders-profit-chart';
+import {OrdersChart} from '../../@core/data/orders-chart';
+import {OrdersChartComponent} from './charts/orders-chart.component';
+import {takeWhile} from 'rxjs/operators';
 
 @Component({
     selector: 'ngx-app-distillation-procedure-detail',
@@ -15,8 +25,15 @@ import {DistillationProcedureService} from '../service/distillation-procedure.se
 export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
     theme: any;
     distillationProcedure: DistillationProcedure;
-    private alive = true;
+
     id: number;
+    private alive = true;
+
+    chartPanelSummary: OrderProfitChartSummary[];
+    period: string = 'week';
+    ordersChartData: OrdersChart;
+
+    @ViewChild('ordersChart', {static: true}) ordersChart: OrdersChartComponent;
 
     constructor(
         private route: ActivatedRoute,
@@ -25,14 +42,9 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
         private themeService: NbThemeService,
         private temperatureHumidityService: TemperatureHumidityData,
         private toastrService: NbToastrService,
+        private breakpointService: NbMediaBreakpointsService,
     ) {
-    }
-
-    gotoDistillationProcedureList() {
-        this.router.navigate(['/pages/distillation-procedure-list']);
-    }
-
-    ngOnInit(): void {
+        this.setPeriodAndGetChartData('week');
         this.route.queryParams.subscribe(params => {
             this.id = JSON.parse(params['id']);
             this.distillationprocedureService.get(this.id).subscribe(
@@ -41,11 +53,20 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
                 },
             );
         });
+        this.distillationprocedureService.getChartSummary()
+            .pipe(takeWhile(() => this.alive))
+            .subscribe((summary) => {
+                this.chartPanelSummary = summary;
+            });
     }
 
-    ngOnDestroy() {
-        this.alive = false;
+    gotoDistillationProcedureList() {
+        this.router.navigate(['/pages/distillation-procedure-list']);
     }
+
+    ngOnInit(): void {
+    }
+
 
     private makeDistillationPhaseRemoveToast(name: string) {
         this.showToast('primary', 'Distillation phase removed!', 'The phase ' + name + ' has been removed.');
@@ -79,5 +100,30 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
             `${titleContent}`,
             config);
     }
-}
 
+    setPeriodAndGetChartData(value: string): void {
+        if (this.period !== value) {
+            this.period = value;
+        }
+        this.getOrdersChartData(value);
+    }
+
+    changeTab(selectedTab) {
+        // TODO adjust to selceted tab
+        // console.log(selectedTab);
+        // this.getOrdersChartData('month');
+        this.ordersChart.resizeChart();
+    }
+
+    getOrdersChartData(period: string) {
+        this.distillationprocedureService.getOrdersChartData(period)
+            .pipe(takeWhile(() => this.alive))
+            .subscribe(ordersChartData => {
+                this.ordersChartData = ordersChartData;
+            });
+    }
+
+    ngOnDestroy() {
+        this.alive = false;
+    }
+}

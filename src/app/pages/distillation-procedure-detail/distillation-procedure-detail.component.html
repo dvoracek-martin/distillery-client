@@ -4,7 +4,10 @@
 
             <nb-card-header class="row">
                 <h1 class="col-md-11 align-self-center">
-                    Detail of a distillation procedure for a distillation plan {{distillationProcedure.distillationPlanName}}, attempt # {{distillationProcedure.attemptNumber}}
+                    <div *ngIf="(distillationProcedure)">
+                        Procedure for a distillation plan {{distillationProcedure.distillationPlanName}}, attempt
+                        # {{distillationProcedure.attemptNumber}}
+                    </div>
                 </h1>
                 <button (click)="gotoDistillationProcedureList()"
                         aria-disabled="false"
@@ -20,6 +23,40 @@
             <nb-card-body style="margin-top:5%">
 
             </nb-card-body>
+
         </nb-card>
+
+        <nb-card size="large">
+            <nb-tabset fullWidth (changeTab)="changeTab($event)">
+                <nb-tab tabTitle="Temperature">
+                    <div class="chart-container">
+                        <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
+                        <ngx-chart-panel-header [type]="period"
+                                                (periodChange)="setPeriodAndGetChartData($event)">
+                        </ngx-chart-panel-header>
+                        <ngx-orders-chart #ordersChart [ordersChartData]="ordersChartData"></ngx-orders-chart>
+                    </div>
+                </nb-tab>
+                <nb-tab tabTitle="Flow">
+                    <div class="chart-container">
+                        <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
+                        <ngx-chart-panel-header [type]="period"
+                                                (periodChange)="setPeriodAndGetChartData($event)">
+                        </ngx-chart-panel-header>
+                        <ngx-orders-chart #flowChart [ordersChartData]="ordersChartData"></ngx-orders-chart>
+                    </div>
+                </nb-tab>
+                <nb-tab tabTitle="Alc %">
+                    <div class="chart-container">
+                        <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
+                        <ngx-chart-panel-header [type]="period"
+                                                (periodChange)="setPeriodAndGetChartData($event)">
+                        </ngx-chart-panel-header>
+                        <ngx-orders-chart #alcChart [ordersChartData]="ordersChartData"></ngx-orders-chart>
+                    </div>
+                </nb-tab>
+            </nb-tabset>
+        </nb-card>
+
     </div>
 </div>

@@ -220,7 +220,7 @@ export const DEFAULT_THEME = {
     orderProfitLegend: {
       firstItem: baseThemeVariables.success,
       secondItem: baseThemeVariables.primary,
-      thirdItem: baseThemeVariables.bg3,
+      thirdItem: baseThemeVariables.danger,
     },
 
     visitors: {

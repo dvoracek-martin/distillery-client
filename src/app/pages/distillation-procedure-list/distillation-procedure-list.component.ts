@@ -84,7 +84,6 @@ export class DistillationProcedureListComponent implements OnInit {
         this.distillationProcedureService.findAll().subscribe(data => {
             this.distillationProcedures = data;
             this.source.load(data);
-            console.log(this.source);
         });
     }
 
