@@ -12,8 +12,9 @@ import {DistillationPlanListModule} from './distillation-plan-list/distillation-
 import {DistillationProcedureListModule} from './distillation-procedure-list/distillation-procedure-list.module';
 import {DistillationProcedureService} from './service/distillation-procedure.service';
 import {DistillationProcedureDetailModule} from './distillation-procedure-detail/distillation-procedure-detail.module';
-import {OrdersChartService} from './service/orders-chart.service';
+import {ChartService} from './service/chart-service';
 import {PeriodsService} from './service/periods.service';
+import {ElasticsearchService} from './service/elasticsearch-service';
 
 @NgModule({
     imports: [
@@ -28,8 +29,9 @@ import {PeriodsService} from './service/periods.service';
         DistillationProcedureListModule,
         DistillationProcedureService,
         DistillationProcedureDetailModule,
-        OrdersChartService,
+        ChartService,
         PeriodsService,
+        ElasticsearchService,
     ],
     declarations: [
         PagesComponent,

@@ -4,7 +4,7 @@ import {DistillationProcedure} from '../model/DistillationProcedure';
 import {DistillationPlan} from '../model/distillationPlan';
 import {OrderProfitChartSummary} from '../../@core/data/orders-profit-chart';
 import {Observable} from 'rxjs/Rx';
-import {OrdersChartService} from './orders-chart.service';
+import {ChartService} from './chart-service';
 import {OrdersChart} from '../../@core/data/orders-chart';
 
 @NgModule()
@@ -22,11 +22,11 @@ export class DistillationProcedureService {
         },
         {
             title: 'Max flow',
-            value: '1000 ml/m',
+            value: '1000 ml/h',
         },
         {
             title: 'Min flow',
-            value: '100 ml/m',
+            value: '100 ml/h',
         },
         {
             title: 'Max Alc%',
@@ -36,7 +36,7 @@ export class DistillationProcedureService {
 
 
     constructor(private http: HttpClient,
-                private ordersChartService: OrdersChartService,
+                private chartService: ChartService,
     ) {
         this.procedureUrl = 'http://localhost:8080/api/procedure';
     }
@@ -58,7 +58,8 @@ export class DistillationProcedureService {
         return Observable.of(this.summary);
     }
 
-    getOrdersChartData(period: string): Observable<OrdersChart> {
-        return Observable.of(this.ordersChartService.getOrdersChartData(period));
+    getChartData(type: string, procedureId: number): Observable<OrdersChart> {
+        this.chartService.refreshChartData(procedureId);
+        return Observable.of(this.chartService.getChartData(type));
     }
 }

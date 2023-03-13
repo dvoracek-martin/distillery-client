@@ -31,14 +31,14 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
 
     chartPanelSummary: OrderProfitChartSummary[];
     period: string = 'week';
-    ordersChartData: OrdersChart;
+    chartData: OrdersChart;
 
     @ViewChild('ordersChart', {static: true}) ordersChart: OrdersChartComponent;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private distillationprocedureService: DistillationProcedureService,
+        private distillationProcedureService: DistillationProcedureService,
         private themeService: NbThemeService,
         private temperatureHumidityService: TemperatureHumidityData,
         private toastrService: NbToastrService,
@@ -47,13 +47,13 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
         this.setPeriodAndGetChartData('week');
         this.route.queryParams.subscribe(params => {
             this.id = JSON.parse(params['id']);
-            this.distillationprocedureService.get(this.id).subscribe(
+            this.distillationProcedureService.get(this.id).subscribe(
                 val => {
                     this.distillationProcedure = val;
                 },
             );
         });
-        this.distillationprocedureService.getChartSummary()
+        this.distillationProcedureService.getChartSummary()
             .pipe(takeWhile(() => this.alive))
             .subscribe((summary) => {
                 this.chartPanelSummary = summary;
@@ -105,22 +105,26 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
         if (this.period !== value) {
             this.period = value;
         }
-        this.getOrdersChartData(value);
+        this.getChartData(value);
     }
 
     changeTab(selectedTab) {
         // TODO adjust to selceted tab
         // console.log(selectedTab);
         // this.getOrdersChartData('month');
+        this.getChartData('week');
         this.ordersChart.resizeChart();
     }
 
-    getOrdersChartData(period: string) {
-        this.distillationprocedureService.getOrdersChartData(period)
-            .pipe(takeWhile(() => this.alive))
-            .subscribe(ordersChartData => {
-                this.ordersChartData = ordersChartData;
-            });
+    getChartData(type: string) {
+        this.route.queryParams.subscribe(params => {
+            this.id = JSON.parse(params['id']);
+            this.distillationProcedureService.getChartData(type, this.id)
+                .pipe(takeWhile(() => this.alive))
+                .subscribe(chartData => {
+                    this.chartData = chartData;
+                });
+        });
     }
 
     ngOnDestroy() {
