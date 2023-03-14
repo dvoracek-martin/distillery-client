@@ -133,6 +133,7 @@ export class OrdersChartComponent implements AfterViewInit, OnDestroy, OnChanges
         this.getFirstLine(eTheme),
         this.getSecondLine(eTheme),
         this.getThirdLine(eTheme),
+        this.getFourthLine(eTheme),
       ],
     };
   }
@@ -147,12 +148,23 @@ export class OrdersChartComponent implements AfterViewInit, OnDestroy, OnChanges
           opacity: 0,
         },
         emphasis: {
-          opacity: 0,
+          color: '#ffffff',
+          borderColor: eTheme.itemBorderColor,
+          borderWidth: 2,
+          opacity: 1,
         },
       },
       lineStyle: {
         normal: {
-          width: 0,
+          width: eTheme.lineWidth,
+          type: eTheme.lineStyle,
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: eTheme.firstLineGradFrom,
+          }, {
+            offset: 1,
+            color: eTheme.firstLineGradTo,
+          }]),
         },
       },
       areaStyle: {
@@ -164,7 +176,6 @@ export class OrdersChartComponent implements AfterViewInit, OnDestroy, OnChanges
             offset: 1,
             color: eTheme.firstAreaGradTo,
           }]),
-          opacity: 1,
         },
       },
       data: [],
@@ -252,6 +263,50 @@ export class OrdersChartComponent implements AfterViewInit, OnDestroy, OnChanges
           }, {
             offset: 1,
             color: eTheme.thirdAreaGradTo,
+          }]),
+        },
+      },
+      data: [],
+    };
+  }
+
+  getFourthLine(eTheme) {
+    return {
+      type: 'line',
+      smooth: true,
+      symbolSize: 20,
+      itemStyle: {
+        normal: {
+          opacity: 0,
+        },
+        emphasis: {
+          color: '#ffffff',
+          borderColor: eTheme.itemBorderColor,
+          borderWidth: 2,
+          opacity: 1,
+        },
+      },
+      lineStyle: {
+        normal: {
+          width: eTheme.lineWidth,
+          type: eTheme.lineStyle,
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: eTheme.fourthLineGradFrom,
+          }, {
+            offset: 1,
+            color: eTheme.fourthLineGradTo,
+          }]),
+        },
+      },
+      areaStyle: {
+        normal: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: eTheme.fourthAreaGradFrom,
+          }, {
+            offset: 1,
+            color: eTheme.fourthAreaGradTo,
           }]),
         },
       },

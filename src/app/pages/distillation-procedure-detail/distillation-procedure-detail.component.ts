@@ -1,13 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TemperatureHumidityData} from '../../@core/data/temperature-flow-time';
-import {
-    NbComponentStatus,
-    NbGlobalPhysicalPosition,
-    NbMediaBreakpointsService,
-    NbThemeService,
-    NbToastrService,
-} from '@nebular/theme';
 import {DistillationProcedure} from '../model/distillationProcedure';
 import {DistillationProcedureService} from '../service/distillation-procedure.service';
 import {OrderProfitChartSummary} from '../../@core/data/orders-profit-chart';
@@ -39,12 +31,8 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private distillationProcedureService: DistillationProcedureService,
-        private themeService: NbThemeService,
-        private temperatureHumidityService: TemperatureHumidityData,
-        private toastrService: NbToastrService,
-        private breakpointService: NbMediaBreakpointsService,
     ) {
-        this.setPeriodAndGetChartData('week');
+        this.setPeriodAndGetChartData('temperature');
         this.route.queryParams.subscribe(params => {
             this.id = JSON.parse(params['id']);
             this.distillationProcedureService.get(this.id).subscribe(
@@ -52,12 +40,12 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
                     this.distillationProcedure = val;
                 },
             );
+            this.distillationProcedureService.getChartSummary()
+                .pipe(takeWhile(() => this.alive))
+                .subscribe((summary) => {
+                    this.chartPanelSummary = summary;
+                });
         });
-        this.distillationProcedureService.getChartSummary()
-            .pipe(takeWhile(() => this.alive))
-            .subscribe((summary) => {
-                this.chartPanelSummary = summary;
-            });
     }
 
     gotoDistillationProcedureList() {
@@ -65,40 +53,6 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-    }
-
-
-    private makeDistillationPhaseRemoveToast(name: string) {
-        this.showToast('primary', 'Distillation phase removed!', 'The phase ' + name + ' has been removed.');
-    }
-
-    private makeDistillationPhaseAddedToast() {
-        this.showToast('success', 'Distillation phase added!', 'New distillation phase has been added.');
-    }
-
-    private makeDistillationPlanUpdatedToast(name: string) {
-        this.showToast('success', 'Distillation plan updated!', 'The plan ' + name + ' has been updated.');
-    }
-
-    private makeDistillationPlanErrorsToast(name: string) {
-        this.showToast('danger', 'Distillation plan hasn\'t been updated because it contains errors!', 'The plan ' + name + ' hasn\'t been updated.');
-    }
-
-    private showToast(type: NbComponentStatus, title: string, body: string) {
-        const config = {
-            status: type,
-            destroyByClick: true,
-            duration: 3000,
-            hasIcon: true,
-            position: NbGlobalPhysicalPosition.TOP_RIGHT,
-            preventDuplicates: true,
-        };
-        const titleContent = title ? `${title}` : '';
-
-        this.toastrService.show(
-            body,
-            `${titleContent}`,
-            config);
     }
 
     setPeriodAndGetChartData(value: string): void {
@@ -109,10 +63,7 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
     }
 
     changeTab(selectedTab) {
-        // TODO adjust to selceted tab
-        // console.log(selectedTab);
-        // this.getOrdersChartData('month');
-        this.getChartData('week');
+        this.getChartData(selectedTab.tabId);
         this.ordersChart.resizeChart();
     }
 
@@ -123,6 +74,11 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
                 .pipe(takeWhile(() => this.alive))
                 .subscribe(chartData => {
                     this.chartData = chartData;
+                    this.distillationProcedureService.getChartSummary()
+                        .pipe(takeWhile(() => this.alive))
+                        .subscribe((summary) => {
+                            this.chartPanelSummary = summary;
+                        });
                 });
         });
     }

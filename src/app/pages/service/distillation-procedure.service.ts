@@ -9,31 +9,8 @@ import {OrdersChart} from '../../@core/data/orders-chart';
 
 @NgModule()
 export class DistillationProcedureService {
+
     private readonly procedureUrl: string;
-
-    private summary = [
-        {
-            title: 'Max temperature',
-            value: '123°C',
-        },
-        {
-            title: 'Min temperature',
-            value: '30°C',
-        },
-        {
-            title: 'Max flow',
-            value: '1000 ml/h',
-        },
-        {
-            title: 'Min flow',
-            value: '100 ml/h',
-        },
-        {
-            title: 'Max Alc%',
-            value: '90%',
-        },
-    ];
-
 
     constructor(private http: HttpClient,
                 private chartService: ChartService,
@@ -55,7 +32,7 @@ export class DistillationProcedureService {
     }
 
     getChartSummary(): Observable<OrderProfitChartSummary[]> {
-        return Observable.of(this.summary);
+        return Observable.of( this.chartService.getSummary());
     }
 
     getChartData(type: string, procedureId: number): Observable<OrdersChart> {

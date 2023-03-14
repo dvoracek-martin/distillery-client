@@ -1,19 +1,18 @@
 import {NgModule} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {DistillationPlan} from '../model/distillationPlan';
+import {DistillationProcessDataFromRaspiDto} from '../model/distillationProcessDataFromRaspiDto';
 
 @NgModule()
 export class ElasticsearchService {
 
-    private readonly planUrl: string;
+    private readonly procedureUrl: string;
 
     constructor(private http: HttpClient) {
-        this.planUrl = 'http://localhost:8080/api/procedure';
+        this.procedureUrl = 'http://localhost:8080/api/procedure';
     }
 
-    public get(distillationProcedureId: number): Observable<DistillationPlan> {
-        console.log('tu ano' + this.planUrl + '/es/' + distillationProcedureId );
-        return this.http.get<DistillationPlan>(this.planUrl + '/es/' + distillationProcedureId);
+    public get(distillationProcedureId: number): Observable<DistillationProcessDataFromRaspiDto[]> {
+        return this.http.get<DistillationProcessDataFromRaspiDto[]>(this.procedureUrl + '/es/' + distillationProcedureId);
     }
 }

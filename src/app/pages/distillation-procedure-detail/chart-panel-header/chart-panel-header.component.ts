@@ -14,9 +14,8 @@ export class ChartPanelHeaderComponent implements OnDestroy {
 
   @Output() periodChange = new EventEmitter<string>();
 
-  @Input() type: string = 'week';
+  @Input() type: string = 'temperature';
 
-  types: string[] = ['week', 'month', 'year'];
   chartLegend: {iconColor: string; title: string}[];
   breakpoint: NbMediaBreakpoint = { name: '', width: 0 };
   breakpoints: any;
@@ -28,7 +27,6 @@ export class ChartPanelHeaderComponent implements OnDestroy {
       .pipe(takeWhile(() => this.alive))
       .subscribe(theme => {
         const orderProfitLegend = theme.variables.orderProfitLegend;
-
         this.currentTheme = theme.name;
         this.setLegendItems(orderProfitLegend);
       });
@@ -42,25 +40,12 @@ export class ChartPanelHeaderComponent implements OnDestroy {
   }
 
   setLegendItems(orderProfitLegend) {
-    // this.chartLegend = [
-    //   {
-    //     iconColor: orderProfitLegend.firstItem,
-    //     title: 'Payment',
-    //   },
-    //   {
-    //     iconColor: orderProfitLegend.secondItem,
-    //     title: 'Canceled',
-    //   },
-    //   {
-    //     iconColor: orderProfitLegend.thirdItem,
-    //     title: 'All orders',
-    //   },
-    // ];
-  }
-
-  changePeriod(period: string): void {
-    this.type = period;
-    this.periodChange.emit(period);
+    this.chartLegend = [
+      {
+        iconColor: orderProfitLegend.secondItem,
+        title: 'Flow is counted in ml per minute',
+      },
+    ];
   }
 
   ngOnDestroy() {
