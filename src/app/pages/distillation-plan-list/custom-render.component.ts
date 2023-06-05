@@ -4,7 +4,7 @@ import {ViewCell} from 'ng2-smart-table';
 import {DistillationPlan} from '../model/distillationPlan';
 
 @Component({
-  template: `
+    template: `
     <table>
       <thead>
       <tr>
@@ -27,13 +27,13 @@ import {DistillationPlan} from '../model/distillationPlan';
 })
 export class CustomRenderComponent implements ViewCell, OnInit {
 
-  distillationPlan: DistillationPlan;
+    distillationPlan: DistillationPlan;
 
-  @Input() value: string | number;
-  @Input() rowData: DistillationPlan;
+    @Input() value: string | number;
+    @Input() rowData: DistillationPlan;
 
-  ngOnInit() {
-    this.distillationPlan = this.rowData;
-  }
+    ngOnInit() {
+        this.distillationPlan = this.rowData;
+    }
 
 }

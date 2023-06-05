@@ -17,10 +17,68 @@ export class ChartService extends OrdersChartData {
 
     private data = {};
     private valuesFromRaspi: number[][];
+    private distillationPhaseIds = [];
 
     constructor(private elasticsearchService: ElasticsearchService,
                 private period: PeriodsService) {
         super();
+    }
+
+    getDataLabels(nPoints: number, labelsArray: string[]): string[] {
+        const labelsArrayLength = labelsArray.length;
+        const step = Math.round(nPoints / labelsArrayLength);
+
+        return Array.from(Array(nPoints)).map((item, index) => {
+            const dataIndex = Math.round(index / step);
+
+            return index % step === 0 ? labelsArray[dataIndex] : '';
+        });
+    }
+
+    getChartData(type: string): OrdersChart {
+        return this.data[type];
+    }
+
+    refreshChartData(distillationProcedureId: number) {
+        this.elasticsearchService.get(distillationProcedureId).subscribe(result => {
+            this.setData(result);
+        });
+    }
+
+    public getSummary(): OrderProfitChartSummary[] {
+        const summary = [
+            {
+                title: 'Max temperature',
+                value: this.maxTemperature.toString() + '°C',
+            },
+            {
+                title: 'Min temperature',
+                value: this.minTemperature.toString() + '°C',
+            },
+            {
+                title: 'Max flow',
+                value: this.maxFlow + ' ml/min',
+            },
+            {
+                title: 'Min flow',
+                value: this.minFlow + ' ml/min',
+            },
+            {
+                title: 'Max Alc %',
+                value: this.maxAlc + '%',
+            },
+        ];
+        return summary;
+    }
+
+    getPhaseIds() {
+        console.log('TIOTITIT' + JSON.stringify(this.distillationPhaseIds));
+        console.log('TIOTITIT' + JSON.stringify(this.distillationPhaseIds));
+        return this.distillationPhaseIds;
+    }
+
+    delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     private getDataForTeperature(): OrdersChart {
@@ -68,47 +126,30 @@ export class ChartService extends OrdersChartData {
         };
     }
 
-    getDataLabels(nPoints: number, labelsArray: string[]): string[] {
-        const labelsArrayLength = labelsArray.length;
-        const step = Math.round(nPoints / labelsArrayLength);
-
-        return Array.from(Array(nPoints)).map((item, index) => {
-            const dataIndex = Math.round(index / step);
-
-            return index % step === 0 ? labelsArray[dataIndex] : '';
-        });
-    }
-
-    getChartData(type: string): OrdersChart {
-        return this.data[type];
-    }
-
-    refreshChartData(distillationProcedureId: number) {
-        this.elasticsearchService.get(distillationProcedureId).subscribe(result => {
-            this.setData(result);
-        });
-    }
-
     private setData(result: DistillationProcessDataFromRaspiDto[]) {
         let i = 0;
         const temperatures = new Array<number>();
         const flows = new Array<number>();
         const weights = new Array<number>();
         const timeline = new Array<string>();
+        const distillationPhaseIds = new Array<number>();
         const alcs = new Array<number>();
+        // TODO FIX PHASES
+
+        result.forEach(function (value) {
+            distillationPhaseIds.push(value.distillationPhaseId);
+        });
 
         result.forEach(function (value) {
             temperatures[i] = value.temperature;
-            flows[i] =  Math.trunc(value.flow / 60);
+            flows[i] = Math.trunc(value.flow / 60);
             weights[i] = value.weight;
             // TODO
             alcs [i] = 1;
-
             let seconds = Math.floor(value.timeStartedInMillis / 1000);
             const minutes = Math.floor(seconds / 60);
             seconds = seconds % 60;
             timeline[i] = minutes.toString().padStart(2, '0') + 'm:' + seconds.toString().padStart(2, '0') + 's';
-
             i++;
         });
         this.valuesFromRaspi = [temperatures, flows, weights, alcs];
@@ -124,31 +165,8 @@ export class ChartService extends OrdersChartData {
         this.maxFlow = Math.max(...this.valuesFromRaspi[1]);
         this.minFlow = Math.min(...this.valuesFromRaspi[1]);
         this.maxAlc = Math.max(...this.valuesFromRaspi[3]);
-    }
 
-    public getSummary(): OrderProfitChartSummary[] {
-        const summary = [
-            {
-                title: 'Max temperature',
-                value: this.maxTemperature.toString() + '°C',
-            },
-            {
-                title: 'Min temperature',
-                value: this.minTemperature.toString() + '°C',
-            },
-            {
-                title: 'Max flow',
-                value: this.maxFlow + ' ml/min',
-            },
-            {
-                title: 'Min flow',
-                value: this.minFlow + ' ml/min',
-            },
-            {
-                title: 'Max Alc %',
-                value: this.maxAlc + '%',
-            },
-        ];
-        return summary;
+        this.distillationPhaseIds = [...new Set(distillationPhaseIds)];
+        console.log('ss' + JSON.stringify(this.distillationPhaseIds));
     }
 }

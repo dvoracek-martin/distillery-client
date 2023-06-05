@@ -1,4 +1,4 @@
 export interface OrderProfitChartSummary {
-  title: string;
-  value: string;
+    title: string;
+    value: string;
 }

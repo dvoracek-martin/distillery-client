@@ -11,11 +11,11 @@
                 </h1>
                 <button (click)="gotoDistillationProcedureList()"
                         aria-disabled="false"
-                        type="submit" ngcontent-bfe-c444="" nbbutton="" outline="" ng-reflect-outline=""
-                        class="float-right status-warning appearance-outline size-medium shape-rectangle ng-star-inserted nb-transition"
-                        nbTooltip="Create a new distillation plan" nbTooltipPlacement="top"
-                        nbTooltipStatus="alert"
-                        ng-reflect-status="alert" tabindex="0" type="submit">
+                        class="float-right status-warning appearance-outline size-medium shape-rectangle ng-star-inserted nb-transition" nbTooltip="Create a new distillation plan" nbTooltipPlacement="top" nbTooltipStatus="alert" nbbutton=""
+                        ng-reflect-outline=""
+                        ng-reflect-status="alert" ngcontent-bfe-c444=""
+                        outline=""
+                        tabindex="0" type="submit" type="submit">
                     <i class="nb-chevron-left-outline" style="font-size:40px"></i>
                 </button>
             </nb-card-header>
@@ -27,14 +27,14 @@
         </nb-card>
 
         <nb-card size="large">
-            <nb-tabset fullWidth (changeTab)="changeTab($event)">
-                <nb-tab tabTitle="Temperature" tabId="temperature">
+            <nb-tabset (changeTab)="changeTab($event)" fullWidth>
+                <nb-tab tabId="temperature" tabTitle="Temperature">
                     <div class="chart-container">
                         <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
                         <ngx-orders-chart #temperatureChart [ordersChartData]="chartData"></ngx-orders-chart>
                     </div>
                 </nb-tab>
-                <nb-tab tabTitle="Flow" tabId="flow">
+                <nb-tab tabId="flow" tabTitle="Flow">
                     <div class="chart-container">
                         <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
                         <ngx-chart-panel-header>
@@ -42,13 +42,13 @@
                         <ngx-orders-chart #flowChart [ordersChartData]="chartData"></ngx-orders-chart>
                     </div>
                 </nb-tab>
-                <nb-tab tabTitle="Weight" tabId="weight">
+                <nb-tab tabId="weight" tabTitle="Weight">
                     <div class="chart-container">
                         <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
                         <ngx-orders-chart #alcChart [ordersChartData]="chartData"></ngx-orders-chart>
                     </div>
                 </nb-tab>
-                <nb-tab tabTitle="Alc %" tabId="alc">
+                <nb-tab tabId="alc" tabTitle="Alc %">
                     <div class="chart-container">
                         <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
                         <ngx-orders-chart #alcChart [ordersChartData]="chartData"></ngx-orders-chart>

@@ -21,7 +21,7 @@
             <nb-card-body>
                 <nb-icon (click)="toggleView()" class="flip-icon" icon="chevron-right-outline" pack="eva"
                          style="font-size:50px"></nb-icon>
-                <nb-card size="giant" class="actions-card" style="margin-top: 5%">
+                <nb-card class="actions-card" size="giant" style="margin-top: 5%">
                     <nb-card-body>
                         <form class="ng-untouched ng-pristine ng-valid" novalidate="">
                             <div class="form-group">
@@ -212,8 +212,8 @@
                         <div class="col-sm-2"></div>
                         <button (click)="terminateDistillationPlan()" aria-disabled="false"
                                 class="align-self-center col-sm-5 appearance-outline size-medium shape-rectangle status-danger nb-transition"
-                                ng-reflect-status="danger"
                                 nbbutton=""
+                                ng-reflect-status="danger"
                                 status="danger"
                                 tabindex="0">
                             <p style="font-size:40px;text-align: center; margin: auto;">TERMINATE</p>

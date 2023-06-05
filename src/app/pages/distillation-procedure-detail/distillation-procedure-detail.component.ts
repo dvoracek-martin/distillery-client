@@ -19,13 +19,11 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
     distillationProcedure: DistillationProcedure;
 
     id: number;
-    private alive = true;
-
     chartPanelSummary: OrderProfitChartSummary[];
     period: string = 'week';
     chartData: OrdersChart;
-
     @ViewChild('ordersChart', {static: true}) ordersChart: OrdersChartComponent;
+    private alive = true;
 
     constructor(
         private route: ActivatedRoute,
@@ -46,6 +44,8 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
                     this.chartPanelSummary = summary;
                 });
         });
+
+
     }
 
     gotoDistillationProcedureList() {
@@ -53,6 +53,8 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.getChartData('temperature');
+        this.ordersChart.resizeChart();
     }
 
     setPeriodAndGetChartData(value: string): void {

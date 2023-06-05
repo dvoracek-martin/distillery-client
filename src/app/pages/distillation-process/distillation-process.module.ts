@@ -8,21 +8,21 @@ import {NgxEchartsCoreModule} from 'ngx-echarts/core';
 import {ThemeModule} from '../../@theme/theme.module';
 
 @NgModule({
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    NbCardModule,
-    NbIconModule,
-    NbProgressBarModule,
-    NgxEchartsCoreModule,
-    NbCheckboxModule,
-    ThemeModule,
-    NbSelectModule,
-  ],
-  declarations: [
-    DistillationProcessComponent,
-  ],
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        NbCardModule,
+        NbIconModule,
+        NbProgressBarModule,
+        NgxEchartsCoreModule,
+        NbCheckboxModule,
+        ThemeModule,
+        NbSelectModule,
+    ],
+    declarations: [
+        DistillationProcessComponent,
+    ],
 })
 export class DistillationProcessModule {
 }

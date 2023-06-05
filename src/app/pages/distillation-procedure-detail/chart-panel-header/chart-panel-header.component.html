@@ -1,1 +1,7 @@
 <ngx-legend-chart [legendItems]="chartLegend"></ngx-legend-chart>
+
+<nb-select (selectedChange)="changePeriod($event)" [selected]="type" class="period-select">
+    <nb-option *ngFor="let period of phases" [value]="period">
+        {{ period }}
+    </nb-option>
+</nb-select>

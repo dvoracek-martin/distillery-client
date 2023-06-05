@@ -5,7 +5,7 @@ import {DistillationPlan} from '../model/distillationPlan';
 import {DistillationPlanListComponent} from './distillation-plan-list.component';
 
 @Component({
-  template: `
+    template: `
     <td>
       <button type="submit"
               (click)="distillationPlanListComponent.startDistillationPlan(renderValue)"
@@ -40,14 +40,14 @@ import {DistillationPlanListComponent} from './distillation-plan-list.component'
 })
 
 export class CustomActionRenderComponent implements ViewCell, OnInit {
-  renderValue: DistillationPlan;
-  @Input() value: string | number;
-  @Input() rowData: DistillationPlan;
+    renderValue: DistillationPlan;
+    @Input() value: string | number;
+    @Input() rowData: DistillationPlan;
 
-  constructor(public distillationPlanListComponent: DistillationPlanListComponent) {
-  }
+    constructor(public distillationPlanListComponent: DistillationPlanListComponent) {
+    }
 
-  ngOnInit() {
-    this.renderValue = this.rowData;
-  }
+    ngOnInit() {
+        this.renderValue = this.rowData;
+    }
 }

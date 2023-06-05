@@ -32,7 +32,11 @@ export class DistillationProcedureService {
     }
 
     getChartSummary(): Observable<OrderProfitChartSummary[]> {
-        return Observable.of( this.chartService.getSummary());
+        return Observable.of(this.chartService.getSummary());
+    }
+
+    getPhaseIds(): Observable<string[]> {
+        return Observable.of(this.chartService.getPhaseIds());
     }
 
     getChartData(type: string, procedureId: number): Observable<OrdersChart> {

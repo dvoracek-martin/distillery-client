@@ -5,7 +5,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {
     NbActionsModule,
-    NbCardModule, NbIconModule, NbLayoutModule,
+    NbCardModule,
+    NbIconModule,
+    NbLayoutModule,
     NbRadioModule,
     NbSidebarModule,
     NbStepperModule,

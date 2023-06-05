@@ -110,7 +110,6 @@ export class DistillationProcessComponent implements OnInit {
         this.makeFinishToastAndGoToFinishPage();
         this.disconnect();
         this.gotoDistillationPlanList();
-        return;
     }
 
     makeNoPlanInProgressToastAndGoToPlanList() {

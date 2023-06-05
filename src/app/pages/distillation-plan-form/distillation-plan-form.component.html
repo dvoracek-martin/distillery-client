@@ -1,54 +1,55 @@
 <div class="steppers-container row">
-  <div class="col-md-12 col-lg-12 col-xxxl-12">
-    <nb-card>
-      <nb-card-header class="row">
-        <h1 class="col-md-6 align-self-center">
-          Create a distillation plan
-        </h1>
-        <div class="col-md-6 align-self-center">
-          <button (click)="gotoDistillationPlanList()"
-                  aria-disabled="false"
-                  class="float-right status-danger appearance-outline size-medium shape-rectangle ng-star-inserted nb-transition"
-                  nbbutton="" ng-reflect-outline="" ng-reflect-status="danger"
-                  ngcontent-bfe-c444=""
-                  outline="" tabindex="0"
-                  type="submit">
-            <i class="nb-close" style="font-size:40px"></i>
-          </button>
-        </div>
-      </nb-card-header>
+    <div class="col-md-12 col-lg-12 col-xxxl-12">
+        <nb-card>
+            <nb-card-header class="row">
+                <h1 class="col-md-6 align-self-center">
+                    Create a distillation plan
+                </h1>
+                <div class="col-md-6 align-self-center">
+                    <button (click)="gotoDistillationPlanList()"
+                            aria-disabled="false"
+                            class="float-right status-danger appearance-outline size-medium shape-rectangle ng-star-inserted nb-transition"
+                            nbbutton="" ng-reflect-outline="" ng-reflect-status="danger"
+                            ngcontent-bfe-c444=""
+                            outline="" tabindex="0"
+                            type="submit">
+                        <i class="nb-close" style="font-size:40px"></i>
+                    </button>
+                </div>
+            </nb-card-header>
 
-      <nb-card-body style="margin-top:5%">
-        <nb-stepper #stepper>
-          <nb-step [stepControl]="firstForm" label="Name">
-            <form (ngSubmit)="onFirstSubmit()" [formGroup]="firstForm" class="step-container">
-              <p>
-                Please, specify the name of your distillation plan.
-              </p>
-              <div class="input-group">
+            <nb-card-body style="margin-top:5%">
+                <nb-stepper #stepper>
+                    <nb-step [stepControl]="firstForm" label="Name">
+                        <form (ngSubmit)="onFirstSubmit()" [formGroup]="firstForm" class="step-container">
+                            <p>
+                                Please, specify the name of your distillation plan.
+                            </p>
+                            <div class="input-group">
 
-                <input [(ngModel)]="distillationPlan.name"
-                       [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}"
-                       class="form-control input-full-width size-medium status-basic shape-rectangle nb-transition"
-                       formControlName="firstCtrl"
-                       fullWidth
-                       nbInput
-                       placeholder="Plan name"
-                       type="text">
-              </div>
-              <div style="overflow: auto;margin-top: 50px">
-                <button class="appearance-filled size-medium shape-rectangle status-basic nb-transition" nbButton
-                        nbStepperNext>Next
-                </button>
-              </div>
-            </form>
-          </nb-step>
-          <nb-step [stepControl]="secondForm" label="Description">
-            <form (ngSubmit)="onSecondSubmit()" [formGroup]="secondForm" class="step-container">
-              <p>
-                Please, write a short description of your distillation plan.
-              </p>
-              <div class="input-group">
+                                <input [(ngModel)]="distillationPlan.name"
+                                       [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}"
+                                       class="form-control input-full-width size-medium status-basic shape-rectangle nb-transition"
+                                       formControlName="firstCtrl"
+                                       fullWidth
+                                       nbInput
+                                       placeholder="Plan name"
+                                       type="text">
+                            </div>
+                            <div style="overflow: auto;margin-top: 50px">
+                                <button class="appearance-filled size-medium shape-rectangle status-basic nb-transition"
+                                        nbButton
+                                        nbStepperNext>Next
+                                </button>
+                            </div>
+                        </form>
+                    </nb-step>
+                    <nb-step [stepControl]="secondForm" label="Description">
+                        <form (ngSubmit)="onSecondSubmit()" [formGroup]="secondForm" class="step-container">
+                            <p>
+                                Please, write a short description of your distillation plan.
+                            </p>
+                            <div class="input-group">
                 <textarea [(ngModel)]="distillationPlan.description"
                           [ngClass]="{'form-control-danger': secondForm.invalid && (secondForm.dirty || secondForm.touched)}"
                           class="form-control input-full-width size-medium status-basic shape-rectangle nb-transition"
@@ -57,165 +58,186 @@
                           placeholder="Plan description"
                           rows="5"
                           shape="round"></textarea>
-              </div>
-              <div style="overflow: auto;margin-top: 50px">
-                <button class="appearance-filled size-medium shape-rectangle status-basic nb-transition" nbButton
-                        nbStepperPrevious>Previous
-                </button>
-                <button class="appearance-filled size-medium shape-rectangle status-basic nb-transition" nbButton
-                        nbStepperNext>Next
-                </button>
-              </div>
-            </form>
-          </nb-step>
-          <nb-step [stepControl]="thirdForm" label="Phases">
-            <form (ngSubmit)="onThirdSubmit()" [formGroup]="thirdForm" class="step-container">
-              <div class="container">
-                <table class="table table-bordered" formArrayName="phases">
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-md-10  col-lg-10 col-xxxl-10">
-                        <h1>Phases:</h1>
-                      </div>
-                      <div class="col-md-2 col-lg-2 col-xxxl-2 align-self-center">
-                        <button (click)="addPhase()" class="btn btn-primary" type="button">Add Phase</button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <tr *ngFor="let phase of getPhases().controls; let i=index" [formGroupName]="i">
-                    <nb-card>
-                      <div class="col-md-12 col-lg-12 col-xxxl-12 align-self-center">
-                        <nb-card class="actions-card">
-                          <nb-card-body>
-                            <div class="row">
-                              <div lass="col-md-2">
-                                <h3> Phase Name:</h3>
-                              </div>
-                              <div class="col-md-10 align-self-center">
-                                <nb-card>
-                                  <input (keyup)="adjustName($event,i)"
-                                         class="input-full-width size-medium status-basic shape-rectangle nb-transition"
-                                         formControlName="name" fullWidth nbInput
-                                         placeholder="Phase name"
-                                         required
-                                         type="text">
-                                </nb-card>
-                              </div>
                             </div>
-                          </nb-card-body>
-                        </nb-card>
-                      </div>
-
-                      <div class="col-md-12">
-                        <nb-card size="large">
-                          <nb-tabset fullWidth>
-                            <nb-tab tabTitle="Max Temperature">
-
-                              <div class="slider-container">
-                                <ngx-temperature-dragger
-                                  (valueChange)="adjustTemperature(i, getPhases().at(i).get('temperature').value)"
-                                  [(value)]="getPhases().at(i).get('temperature').value"
-                                  [disableArcColor]="theme.arcEmpty"
-                                  [fillColors]="theme.arcFill" [max]="temperatureData.max"
-                                  [min]="temperatureData.min"
-                                  [thumbBg]="theme.thumbBg" [thumbBorderColor]="theme.thumbBorder"
-                                  formControlName="temp">
-
-                                  <div [ngClass]="{ 'off': temperatureOff }" class="slider-value-container">
-                                    <div class="value temperature h1">
-                                      {{ temperatureOff ? '--' : (getPhases().at(i).get('temperature').value | ngxRound) }}
-                                    </div>
-                                    <div class="desc">
-                                      Celsius
-                                    </div>
-                                  </div>
-                                </ngx-temperature-dragger>
-                              </div>
-                            </nb-tab>
-
-                            <nb-tab tabTitle="Max Flow">
-
-                              <div class="slider-container">
-                                <ngx-temperature-dragger
-                                  (valueChange)="adjustFlow(i, getPhases().at(i).get('flow').value)"
-                                  [(value)]="getPhases().at(i).get('flow').value" [disableArcColor]="theme.arcEmpty"
-                                  [fillColors]="theme.arcFill" [max]="flowData.max"
-                                  [min]="flowData.min"
-                                  [thumbBg]="theme.thumbBg" [thumbBorderColor]="theme.thumbBorder"
-                                  formControlName="temp">
-
-                                  <div [ngClass]="{ 'off': temperatureOff }" class="slider-value-container">
-                                    <div class="value flow h1">
-                                      {{ temperatureOff ? '--' : (getPhases().at(i).get('flow').value | ngxRound) }}
-                                    </div>
-                                    <div class="desc">
-                                      Milliliters per hour
-                                    </div>
-                                  </div>
-                                </ngx-temperature-dragger>
-                              </div>
-                            </nb-tab>
-
-                            <nb-tab tabTitle="Time">
-                              <div class="slider-container">
-                                <ngx-temperature-dragger
-                                        (valueChange)="adjustTime(i, getPhases().at(i).get('time').value)"
-                                        [(value)]="getPhases().at(i).get('time').value"
-                                        [disableArcColor]="theme.arcEmpty"
-                                        [fillColors]="theme.arcFill" [max]="timeData.max"
-                                        [min]="timeData.min"
-                                        [thumbBg]="theme.thumbBg" [thumbBorderColor]="theme.thumbBorder"
-                                        formControlName="temp">
-
-                                  <div [ngClass]="{ 'off': temperatureOff }" class="slider-value-container">
-                                    <div class="value time h1">
-                                      {{ temperatureOff ? '--' : (getPhases().at(i).get('time').value | ngxRound) }}
-                                    </div>
-                                    <div class="desc">
-                                      Minutes
-                                    </div>
-                                  </div>
-                                </ngx-temperature-dragger>
-                              </div>
-                            </nb-tab>
-                          </nb-tabset>
-                        </nb-card>
-                      </div>
-
-                      <div class="col-md-12 col-lg-12 col-xxxl-12 align-self-center">
-                        <nb-card class="actions-card col-md-12" style="overflow: auto">
-                          <nb-card-body class="col-md-12">
-                            <div style="float:none;overflow: hidden; top: 20%">
-                              <nb-actions size="giant" style="position: absolute; left: 45%; right: 55%; top: 25%">
-                                <nb-action (click)="removePhase(i)"
-                                           icon="trash-2-outline"></nb-action>
-                              </nb-actions>
+                            <div style="overflow: auto;margin-top: 50px">
+                                <button class="appearance-filled size-medium shape-rectangle status-basic nb-transition"
+                                        nbButton
+                                        nbStepperPrevious>Previous
+                                </button>
+                                <button class="appearance-filled size-medium shape-rectangle status-basic nb-transition"
+                                        nbButton
+                                        nbStepperNext>Next
+                                </button>
                             </div>
-                          </nb-card-body>
-                        </nb-card>
-                      </div>
+                        </form>
+                    </nb-step>
+                    <nb-step [stepControl]="thirdForm" label="Phases">
+                        <form (ngSubmit)="onThirdSubmit()" [formGroup]="thirdForm" class="step-container">
+                            <div class="container">
+                                <table class="table table-bordered" formArrayName="phases">
+                                    <caption>
+                                        Distillation phases
+                                    </caption>
+                                    <th>
+                                    </th>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-10  col-lg-10 col-xxxl-10">
+                                                <h1>Phases:</h1>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2 col-xxxl-2 align-self-center">
+                                                <button (click)="addPhase()" class="btn btn-primary" type="button">Add
+                                                    Phase
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                    </nb-card>
-                  </tr>
-                </table>
-              </div>
-              <div style="overflow: auto;margin-top: 50px">
-                <button class="appearance-filled size-medium shape-rectangle status-basic nb-transition" nbButton
-                        nbStepperPrevious>
-                  Previous
-                </button>
-                <button (click)="onSubmit()"
-                        class="status-success appearance-filled size-medium shape-rectangle status-basic nb-transition"
-                        nbButton ng-reflect-status="success"
-                        type="submit">
-                  Confirm
-                </button>
-              </div>
-            </form>
-          </nb-step>
-        </nb-stepper>
-      </nb-card-body>
-    </nb-card>
-  </div>
+                                    <tr *ngFor="let phase of getPhases().controls; let i=index" [formGroupName]="i">
+                                        <nb-card>
+                                            <div class="col-md-12 col-lg-12 col-xxxl-12 align-self-center">
+                                                <nb-card class="actions-card">
+                                                    <nb-card-body>
+                                                        <div class="row">
+                                                            <div lass="col-md-2">
+                                                                <h3> Phase Name:</h3>
+                                                            </div>
+                                                            <div class="col-md-10 align-self-center">
+                                                                <nb-card>
+                                                                    <input (keyup)="adjustName($event,i)"
+                                                                           class="input-full-width size-medium status-basic shape-rectangle nb-transition"
+                                                                           formControlName="name" fullWidth nbInput
+                                                                           placeholder="Phase name"
+                                                                           required
+                                                                           type="text">
+                                                                </nb-card>
+                                                            </div>
+                                                        </div>
+                                                    </nb-card-body>
+                                                </nb-card>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <nb-card size="large">
+                                                    <nb-tabset fullWidth>
+                                                        <nb-tab tabTitle="Max Temperature">
+
+                                                            <div class="slider-container">
+                                                                <ngx-temperature-dragger
+                                                                        (valueChange)="adjustTemperature(i, getPhases().at(i).get('temperature').value)"
+                                                                        [(value)]="getPhases().at(i).get('temperature').value"
+                                                                        [disableArcColor]="theme.arcEmpty"
+                                                                        [fillColors]="theme.arcFill"
+                                                                        [max]="temperatureData.max"
+                                                                        [min]="temperatureData.min"
+                                                                        [thumbBg]="theme.thumbBg"
+                                                                        [thumbBorderColor]="theme.thumbBorder"
+                                                                        formControlName="temp">
+
+                                                                    <div [ngClass]="{ 'off': temperatureOff }"
+                                                                         class="slider-value-container">
+                                                                        <div class="value temperature h1">
+                                                                            {{ temperatureOff ? '--' : (getPhases().at(i).get('temperature').value | ngxRound) }}
+                                                                        </div>
+                                                                        <div class="desc">
+                                                                            Celsius
+                                                                        </div>
+                                                                    </div>
+                                                                </ngx-temperature-dragger>
+                                                            </div>
+                                                        </nb-tab>
+
+                                                        <nb-tab tabTitle="Max Flow">
+
+                                                            <div class="slider-container">
+                                                                <ngx-temperature-dragger
+                                                                        (valueChange)="adjustFlow(i, getPhases().at(i).get('flow').value)"
+                                                                        [(value)]="getPhases().at(i).get('flow').value"
+                                                                        [disableArcColor]="theme.arcEmpty"
+                                                                        [fillColors]="theme.arcFill"
+                                                                        [max]="flowData.max"
+                                                                        [min]="flowData.min"
+                                                                        [thumbBg]="theme.thumbBg"
+                                                                        [thumbBorderColor]="theme.thumbBorder"
+                                                                        formControlName="temp">
+
+                                                                    <div [ngClass]="{ 'off': temperatureOff }"
+                                                                         class="slider-value-container">
+                                                                        <div class="value flow h1">
+                                                                            {{ temperatureOff ? '--' : (getPhases().at(i).get('flow').value | ngxRound) }}
+                                                                        </div>
+                                                                        <div class="desc">
+                                                                            Milliliters per hour
+                                                                        </div>
+                                                                    </div>
+                                                                </ngx-temperature-dragger>
+                                                            </div>
+                                                        </nb-tab>
+
+                                                        <nb-tab tabTitle="Time">
+                                                            <div class="slider-container">
+                                                                <ngx-temperature-dragger
+                                                                        (valueChange)="adjustTime(i, getPhases().at(i).get('time').value)"
+                                                                        [(value)]="getPhases().at(i).get('time').value"
+                                                                        [disableArcColor]="theme.arcEmpty"
+                                                                        [fillColors]="theme.arcFill"
+                                                                        [max]="timeData.max"
+                                                                        [min]="timeData.min"
+                                                                        [thumbBg]="theme.thumbBg"
+                                                                        [thumbBorderColor]="theme.thumbBorder"
+                                                                        formControlName="temp">
+
+                                                                    <div [ngClass]="{ 'off': temperatureOff }"
+                                                                         class="slider-value-container">
+                                                                        <div class="value time h1">
+                                                                            {{ temperatureOff ? '--' : (getPhases().at(i).get('time').value | ngxRound) }}
+                                                                        </div>
+                                                                        <div class="desc">
+                                                                            Minutes
+                                                                        </div>
+                                                                    </div>
+                                                                </ngx-temperature-dragger>
+                                                            </div>
+                                                        </nb-tab>
+                                                    </nb-tabset>
+                                                </nb-card>
+                                            </div>
+
+                                            <div class="col-md-12 col-lg-12 col-xxxl-12 align-self-center">
+                                                <nb-card class="actions-card col-md-12" style="overflow: auto">
+                                                    <nb-card-body class="col-md-12">
+                                                        <div style="float:none;overflow: hidden; top: 20%">
+                                                            <nb-actions size="giant"
+                                                                        style="position: absolute; left: 45%; right: 55%; top: 25%">
+                                                                <nb-action (click)="removePhase(i)"
+                                                                           icon="trash-2-outline"></nb-action>
+                                                            </nb-actions>
+                                                        </div>
+                                                    </nb-card-body>
+                                                </nb-card>
+                                            </div>
+
+                                        </nb-card>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="overflow: auto;margin-top: 50px">
+                                <button class="appearance-filled size-medium shape-rectangle status-basic nb-transition"
+                                        nbButton
+                                        nbStepperPrevious>
+                                    Previous
+                                </button>
+                                <button (click)="onSubmit()"
+                                        class="status-success appearance-filled size-medium shape-rectangle status-basic nb-transition"
+                                        nbButton ng-reflect-status="success"
+                                        type="submit">
+                                    Confirm
+                                </button>
+                            </div>
+                        </form>
+                    </nb-step>
+                </nb-stepper>
+            </nb-card-body>
+        </nb-card>
+    </div>
 </div>

@@ -1,15 +1,17 @@
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import { DistillationProcessComponent } from './distillation-process.component';
+import {DistillationProcessComponent} from './distillation-process.component';
 
 export class WebSocketAPI {
     webSocketEndPoint: string = 'http://localhost:8080/ws';
     topic: string = '/topic/distillery-frontend';
     stompClient: any;
     distillationProcessComponent: DistillationProcessComponent;
+
     constructor(appComponent: DistillationProcessComponent) {
         this.distillationProcessComponent = appComponent;
     }
+
     _connect() {
         const ws = new SockJS(this.webSocketEndPoint);
         this.stompClient = Stomp.over(ws);
@@ -34,9 +36,9 @@ export class WebSocketAPI {
     }
 
     /**
-	 * Send message to sever via web socket
-	 * @param {*} message
-	 */
+     * Send message to sever via web socket
+     * @param {*} message
+     */
     _send(message) {
         this.stompClient.send('/distillery/distillery-backend', {}, JSON.stringify(message));
     }

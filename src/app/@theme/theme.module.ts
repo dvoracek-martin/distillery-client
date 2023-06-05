@@ -1,17 +1,17 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
-  NbActionsModule,
-  NbButtonModule,
-  NbContextMenuModule,
-  NbIconModule,
-  NbLayoutModule,
-  NbMenuModule,
-  NbSearchModule,
-  NbSelectModule,
-  NbSidebarModule,
-  NbThemeModule,
-  NbUserModule,
+    NbActionsModule,
+    NbButtonModule,
+    NbContextMenuModule,
+    NbIconModule,
+    NbLayoutModule,
+    NbMenuModule,
+    NbSearchModule,
+    NbSelectModule,
+    NbSidebarModule,
+    NbThemeModule,
+    NbUserModule,
 } from '@nebular/theme';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
 import {NbSecurityModule} from '@nebular/security';
@@ -23,53 +23,53 @@ import {OneColumnLayoutComponent, ThreeColumnsLayoutComponent, TwoColumnsLayoutC
 import {DEFAULT_THEME} from './styles/theme.default';
 
 const NB_MODULES = [
-  NbLayoutModule,
-  NbMenuModule,
-  NbUserModule,
-  NbActionsModule,
-  NbSearchModule,
-  NbSidebarModule,
-  NbContextMenuModule,
-  NbSecurityModule,
-  NbButtonModule,
-  NbSelectModule,
-  NbIconModule,
-  NbEvaIconsModule,
+    NbLayoutModule,
+    NbMenuModule,
+    NbUserModule,
+    NbActionsModule,
+    NbSearchModule,
+    NbSidebarModule,
+    NbContextMenuModule,
+    NbSecurityModule,
+    NbButtonModule,
+    NbSelectModule,
+    NbIconModule,
+    NbEvaIconsModule,
 ];
 const COMPONENTS = [
-  HeaderComponent,
-  FooterComponent,
-  SearchInputComponent,
-  TinyMCEComponent,
-  OneColumnLayoutComponent,
-  ThreeColumnsLayoutComponent,
-  TwoColumnsLayoutComponent,
+    HeaderComponent,
+    FooterComponent,
+    SearchInputComponent,
+    TinyMCEComponent,
+    OneColumnLayoutComponent,
+    ThreeColumnsLayoutComponent,
+    TwoColumnsLayoutComponent,
 ];
 const PIPES = [
-  CapitalizePipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-  NumberWithCommasPipe,
+    CapitalizePipe,
+    PluralPipe,
+    RoundPipe,
+    TimingPipe,
+    NumberWithCommasPipe,
 ];
 
 @NgModule({
-  imports: [CommonModule, ...NB_MODULES],
-  exports: [CommonModule, ...PIPES, ...COMPONENTS],
-  declarations: [...COMPONENTS, ...PIPES],
+    imports: [CommonModule, ...NB_MODULES],
+    exports: [CommonModule, ...PIPES, ...COMPONENTS],
+    declarations: [...COMPONENTS, ...PIPES],
 })
 export class ThemeModule {
-  static forRoot(): ModuleWithProviders<ThemeModule> {
-    return {
-      ngModule: ThemeModule,
-      providers: [
-        ...NbThemeModule.forRoot(
-          {
-            name: 'default',
-          },
-          [DEFAULT_THEME],
-        ).providers,
-      ],
-    };
-  }
+    static forRoot(): ModuleWithProviders<ThemeModule> {
+        return {
+            ngModule: ThemeModule,
+            providers: [
+                ...NbThemeModule.forRoot(
+                    {
+                        name: 'default',
+                    },
+                    [DEFAULT_THEME],
+                ).providers,
+            ],
+        };
+    }
 }

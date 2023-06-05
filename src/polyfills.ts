@@ -39,7 +39,6 @@ import 'core-js/es7/object';
 
 
 /** ALL Firefox browsers require the following to support `@angular/animation`. **/
-// import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 
 
 /***************************************************************************************************
@@ -47,7 +46,7 @@ import 'core-js/es7/object';
  */
 
 if (typeof SVGElement.prototype.contains === 'undefined') {
-  SVGElement.prototype.contains = HTMLDivElement.prototype.contains;
+    SVGElement.prototype.contains = HTMLDivElement.prototype.contains;
 }
 
 (window as any).global = window;
