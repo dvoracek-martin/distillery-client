@@ -27,7 +27,7 @@ export class WebSocketAPI {
      * Send message to sever via web socket
      * @param {*} message
      */
-    async send(message) {
+    send = async message => {
         while (this.webSocket.readyState !== 1) {
             await new Promise(f => setTimeout(f, 1000));
         }
