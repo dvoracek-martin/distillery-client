@@ -53,25 +53,25 @@ export class DistillationProcessComponent implements OnInit {
     }
 
     connect() {
-        this.webSocketAPI._connect();
+        this.webSocketAPI.connect();
     }
 
     disconnect() {
-        this.webSocketAPI._disconnect();
+        this.webSocketAPI.disconnect();
     }
 
     sendMessage() {
-        this.webSocketAPI._send('distillery-fromBackend');
+        this.webSocketAPI.send('distillery-frontend');
     }
 
     handleMessage(message) {
-        const map = new Map(Object.entries(JSON.parse(message)));
+        const map = new Map(Object.entries(message));
         if (map.get('terminated') === true && this.distillationProcessDataToFrontendDto.distillationPlanDto.name != null) {
             this.distillationFinished = true;
             clearInterval(this.interval);
             this.terminateDistillationProcess();
         }
-        this.distillationProcessDataToFrontendDto = JSON.parse(message);
+        this.distillationProcessDataToFrontendDto = message;
         this.timeElapsedMinutes = this.distillationProcessDataToFrontendDto.timeElapsedInMillis / 1000 / 60;
         this.timeElapsedSeconds = this.distillationProcessDataToFrontendDto.timeElapsedInMillis / 1000 % 60;
         this.progress = Math.round(100 / (this.distillationProcessDataToFrontendDto.currentDistillationPhaseDto.time / this.distillationProcessDataToFrontendDto.timeElapsedInMillis));

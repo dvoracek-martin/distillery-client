@@ -1,49 +1,40 @@
-import * as Stomp from 'stompjs';
-import * as SockJS from 'sockjs-client';
 import {DistillationProcessComponent} from './distillation-process.component';
 
 export class WebSocketAPI {
-    webSocketEndPoint: string = 'http://localhost:8080/ws';
-    topic: string = '/topic/distillery-frontend';
-    stompClient: any;
+
     distillationProcessComponent: DistillationProcessComponent;
+    private WS_BACKEND_URL = 'ws://localhost:8080/distillery-backend';
+    private webSocket: WebSocket;
 
     constructor(appComponent: DistillationProcessComponent) {
         this.distillationProcessComponent = appComponent;
     }
 
-    _connect() {
-        const ws = new SockJS(this.webSocketEndPoint);
-        this.stompClient = Stomp.over(ws);
-        const _this = this;
-        _this.stompClient.connect({}, function (frame) {
-            _this.stompClient.subscribe(_this.topic, function (sdkEvent) {
-                _this.onMessageReceived(sdkEvent);
-            });
-        }, this.errorCallBack);
+    connect() {
+        this.webSocket = new WebSocket(this.WS_BACKEND_URL);
+        this.webSocket.onmessage = (event) => {
+            this.onMessageReceived(JSON.parse(event.data));
+        };
     }
 
-    _disconnect() {
-        if (this.stompClient !== null) {
-            this.stompClient.disconnect();
+    disconnect() {
+        if (this.webSocket !== null) {
+            this.webSocket.close();
         }
-    }
-
-    errorCallBack(error) {
-        setTimeout(() => {
-            this._connect();
-        }, 5000);
     }
 
     /**
      * Send message to sever via web socket
      * @param {*} message
      */
-    _send(message) {
-        this.stompClient.send('/distillery/distillery-backend', {}, JSON.stringify(message));
+    async send(message) {
+        while (this.webSocket.readyState !== 1) {
+            await new Promise(f => setTimeout(f, 1000));
+        }
+        this.webSocket.send(JSON.stringify(message));
     }
 
-    onMessageReceived(message) {
-        this.distillationProcessComponent.handleMessage((message.body));
+    onMessageReceived(data) {
+        this.distillationProcessComponent.handleMessage(data);
     }
 }
