@@ -1,7 +1,6 @@
-<div class="steppers-container row">
-    <div class="col-md-12 col-lg-12 col-xxxl-12">
+<div class="row">
+    <div class="col-md-12">
         <nb-card>
-
             <nb-card-header class="row">
                 <h1 class="col-md-11 align-self-center">
                     <div *ngIf="(distillationProcedure)">
@@ -11,7 +10,9 @@
                 </h1>
                 <button (click)="gotoDistillationProcedureList()"
                         aria-disabled="false"
-                        class="float-right status-warning appearance-outline size-medium shape-rectangle ng-star-inserted nb-transition" nbTooltip="Create a new distillation plan" nbTooltipPlacement="top" nbTooltipStatus="alert" nbbutton=""
+                        class="float-right status-warning appearance-outline size-medium shape-rectangle ng-star-inserted nb-transition"
+                        nbTooltip="Create a new distillation plan" nbTooltipPlacement="top" nbTooltipStatus="alert"
+                        nbbutton=""
                         ng-reflect-outline=""
                         ng-reflect-status="alert" ngcontent-bfe-c444=""
                         outline=""
@@ -19,43 +20,34 @@
                     <i class="nb-chevron-left-outline" style="font-size:40px"></i>
                 </button>
             </nb-card-header>
-
-            <nb-card-body style="margin-top:5%">
-
-            </nb-card-body>
-
-        </nb-card>
-
-        <nb-card size="large">
-            <nb-tabset (changeTab)="changeTab($event)" fullWidth>
-                <nb-tab tabId="temperature" tabTitle="Temperature">
+            <nb-card-body>
+                <div class="col-12">
                     <div class="chart-container">
                         <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
-                        <ngx-orders-chart #temperatureChart [ordersChartData]="chartData"></ngx-orders-chart>
-                    </div>
-                </nb-tab>
-                <nb-tab tabId="flow" tabTitle="Flow">
-                    <div class="chart-container">
-                        <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
-                        <ngx-chart-panel-header>
+                        <ngx-chart-panel-header [type]="temperatureHeader">
                         </ngx-chart-panel-header>
-                        <ngx-orders-chart #flowChart [ordersChartData]="chartData"></ngx-orders-chart>
+                        <ngx-orders-chart #temperatureChart
+                                          [ordersChartData]="chartDataTemperature"></ngx-orders-chart>
                     </div>
-                </nb-tab>
-                <nb-tab tabId="weight" tabTitle="Weight">
                     <div class="chart-container">
-                        <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
-                        <ngx-orders-chart #alcChart [ordersChartData]="chartData"></ngx-orders-chart>
+                        <ngx-chart-panel-header [type]="flowHeader">
+                        </ngx-chart-panel-header>
+                        <ngx-orders-chart #flowChart
+                                          [ordersChartData]="chartDataFlow"></ngx-orders-chart>
                     </div>
-                </nb-tab>
-                <nb-tab tabId="alc" tabTitle="Alc %">
                     <div class="chart-container">
-                        <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
-                        <ngx-orders-chart #alcChart [ordersChartData]="chartData"></ngx-orders-chart>
+                        <ngx-chart-panel-header [type]="weightHeader">
+                        </ngx-chart-panel-header>
+                        <ngx-orders-chart #weightChart [ordersChartData]="chartDataWeight"></ngx-orders-chart>
                     </div>
-                </nb-tab>
-            </nb-tabset>
+                    <div class="chart-container">
+                        <ngx-chart-panel-header [type]="alcHeader">
+                        </ngx-chart-panel-header>
+                        <ngx-orders-chart #alcChart [ordersChartData]="chartDataAlc"></ngx-orders-chart>
+                    </div>
+                </div>
+            </nb-card-body>
         </nb-card>
-
     </div>
+
 </div>

@@ -40,6 +40,10 @@ export class DistillationPlanService {
         return this.http.post<DistillationPlan>(this.planUrl + '/terminate', distillationPlan);
     }
 
+    public terminateByUser(distillationPlan: DistillationPlan) {
+        return this.http.post<DistillationPlan>(this.planUrl + '/terminate-by-user', distillationPlan);
+    }
+
     public jumpToNextPhase(distillationPlan: DistillationPlan): Observable<DistillationPlan[]> {
         return this.http.post<DistillationPlan[]>(this.planUrl + '/next', distillationPlan);
     }

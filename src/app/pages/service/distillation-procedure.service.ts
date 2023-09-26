@@ -3,9 +3,10 @@ import {HttpClient} from '@angular/common/http';
 import {DistillationProcedure} from '../model/DistillationProcedure';
 import {DistillationPlan} from '../model/distillationPlan';
 import {OrderProfitChartSummary} from '../../@core/data/orders-profit-chart';
-import {Observable} from 'rxjs/Rx';
 import {ChartService} from './chart-service';
 import {OrdersChart} from '../../@core/data/orders-chart';
+import {Observable, of as observableOf} from 'rxjs';
+
 
 @NgModule()
 export class DistillationProcedureService {
@@ -32,15 +33,15 @@ export class DistillationProcedureService {
     }
 
     getChartSummary(): Observable<OrderProfitChartSummary[]> {
-        return Observable.of(this.chartService.getSummary());
+        return observableOf(this.chartService.getSummary());
     }
 
     getPhaseIds(): Observable<string[]> {
-        return Observable.of(this.chartService.getPhaseIds());
+        return observableOf(this.chartService.getPhaseIds());
     }
 
     getChartData(type: string, procedureId: number): Observable<OrdersChart> {
         this.chartService.refreshChartData(procedureId);
-        return Observable.of(this.chartService.getChartData(type));
+        return observableOf(this.chartService.getChartData(type));
     }
 }

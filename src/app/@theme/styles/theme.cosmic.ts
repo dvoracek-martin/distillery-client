@@ -215,6 +215,7 @@ export const COSMIC_THEME = {
             firstItem: baseThemeVariables.success,
             secondItem: baseThemeVariables.primary,
             thirdItem: baseThemeVariables.bg2,
+            fourthItem: 'rgb(255,202,0)',
         },
 
         visitors: {

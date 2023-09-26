@@ -221,6 +221,7 @@ export const DARK_THEME = {
             firstItem: baseThemeVariables.success,
             secondItem: baseThemeVariables.primary,
             thirdItem: baseThemeVariables.bg3,
+            fourthItem: 'rgb(255,202,0)',
         },
 
         visitors: {

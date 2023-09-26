@@ -232,6 +232,7 @@ export const DEFAULT_THEME = {
             firstItem: baseThemeVariables.success,
             secondItem: baseThemeVariables.primary,
             thirdItem: baseThemeVariables.danger,
+            fourthItem: 'rgb(255,202,0)',
         },
 
         visitors: {

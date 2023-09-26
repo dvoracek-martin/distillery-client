@@ -15,6 +15,10 @@ export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
     @Input() type: string = 'temperature';
     phases: string[] = [];
     chartLegend: { iconColor: string; title: string }[];
+    chartLegendTemperature: { iconColor: string; title: string }[];
+    chartLegendFlow: { iconColor: string; title: string }[];
+    chartLegendWeight: { iconColor: string; title: string }[];
+    chartLegendAlc: { iconColor: string; title: string }[];
     breakpoint: NbMediaBreakpoint = {name: '', width: 0};
     breakpoints: any;
     currentTheme: string;
@@ -41,10 +45,28 @@ export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
     }
 
     setLegendItems(orderProfitLegend) {
-        this.chartLegend = [
+        this.chartLegendTemperature = [
+            {
+                iconColor: orderProfitLegend.thirdItem,
+                title: 'Temperature in °C',
+            },
+        ];
+        this.chartLegendFlow = [
             {
                 iconColor: orderProfitLegend.secondItem,
-                title: 'Flow is counted in ml per minute',
+                title: 'Flow in ml/h',
+            },
+        ];
+        this.chartLegendWeight = [
+            {
+                iconColor: orderProfitLegend.firstItem,
+                title: 'Weight',
+            },
+        ];
+        this.chartLegendAlc = [
+            {
+                iconColor: orderProfitLegend.fourthItem,
+                title: '% Alc',
             },
         ];
     }
@@ -58,10 +80,8 @@ export class ChartPanelHeaderComponent implements OnInit, OnDestroy {
     }
 
     public setPhases(): void {
-        console.log('sdfaf');
         this.distillationProcedureService.getPhaseIds().subscribe(value1 => {
             this.phases = value1;
-            console.log(JSON.stringify(this.phases));
         });
     }
 

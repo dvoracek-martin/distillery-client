@@ -40,8 +40,20 @@ export class ChartService extends OrdersChartData {
     }
 
     refreshChartData(distillationProcedureId: number) {
+        const GRANULARITY = 50;
         this.elasticsearchService.get(distillationProcedureId).subscribe(result => {
-            this.setData(result);
+            const numberOfGraphPoints = Math.trunc(result.length / GRANULARITY);
+            let i = 0;
+            const finalList: DistillationProcessDataFromRaspiDto[] = new Array();
+            result.forEach(function (value) {
+                if (result.length > GRANULARITY - 1 && i % numberOfGraphPoints !== 0 && i !== 0) {
+                    i++;
+                    return;
+                }
+                finalList.push(value);
+                i++;
+            });
+            this.setData(finalList);
         });
     }
 
@@ -72,13 +84,7 @@ export class ChartService extends OrdersChartData {
     }
 
     getPhaseIds() {
-        console.log('TIOTITIT' + JSON.stringify(this.distillationPhaseIds));
-        console.log('TIOTITIT' + JSON.stringify(this.distillationPhaseIds));
         return this.distillationPhaseIds;
-    }
-
-    delay(ms: number) {
-        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     private getDataForTeperature(): OrdersChart {
@@ -139,7 +145,6 @@ export class ChartService extends OrdersChartData {
         result.forEach(function (value) {
             distillationPhaseIds.push(value.distillationPhaseId);
         });
-
         result.forEach(function (value) {
             temperatures[i] = value.temperature;
             flows[i] = Math.trunc(value.flow / 60);
@@ -167,6 +172,5 @@ export class ChartService extends OrdersChartData {
         this.maxAlc = Math.max(...this.valuesFromRaspi[3]);
 
         this.distillationPhaseIds = [...new Set(distillationPhaseIds)];
-        console.log('ss' + JSON.stringify(this.distillationPhaseIds));
     }
 }

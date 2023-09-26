@@ -135,6 +135,11 @@ export class DistillationProcessComponent implements OnInit {
         this.distillationPlanService.terminate(this.distillationProcessDataToFrontendDto.distillationPlanDto).subscribe();
     }
 
+    terminateDistillationPlanByUser() {
+        this.makeFinishToastAndGoToFinishPage();
+        this.distillationPlanService.terminateByUser(this.distillationProcessDataToFrontendDto.distillationPlanDto).subscribe();
+    }
+
     private makeFinishToastAndGoToFinishPage() {
         this.showToast('success', 'Distillation finished!', 'The distillation plan ' + this.distillationProcessDataToFrontendDto.distillationPlanDto.name + ' has been successfully finished.');
     }

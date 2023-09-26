@@ -21,7 +21,15 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
     id: number;
     chartPanelSummary: OrderProfitChartSummary[];
     period: string = 'week';
+    temperatureHeader = 'temperatureHeader';
+    flowHeader = 'flowHeader';
+    weightHeader = 'weightHeader';
+    alcHeader = 'alcHeader';
     chartData: OrdersChart;
+    chartDataTemperature: OrdersChart;
+    chartDataFlow: OrdersChart;
+    chartDataWeight: OrdersChart;
+    chartDataAlc: OrdersChart;
     @ViewChild('ordersChart', {static: true}) ordersChart: OrdersChartComponent;
     private alive = true;
 
@@ -30,7 +38,19 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
         private router: Router,
         private distillationProcedureService: DistillationProcedureService,
     ) {
-        this.setPeriodAndGetChartData('temperature');
+        this.distillationProcedureService.getChartSummary()
+            .pipe(takeWhile(() => this.alive))
+            .subscribe((summary) => {
+                this.chartPanelSummary = summary;
+            });
+
+
+        this.getChartData('temperature');
+        this.getChartData('flow');
+        this.getChartData('weight');
+        this.getChartData('alc');
+
+
         this.route.queryParams.subscribe(params => {
             this.id = JSON.parse(params['id']);
             this.distillationProcedureService.get(this.id).subscribe(
@@ -44,8 +64,6 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
                     this.chartPanelSummary = summary;
                 });
         });
-
-
     }
 
     gotoDistillationProcedureList() {
@@ -54,18 +72,9 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.getChartData('temperature');
-        this.ordersChart.resizeChart();
-    }
-
-    setPeriodAndGetChartData(value: string): void {
-        if (this.period !== value) {
-            this.period = value;
-        }
-        this.getChartData(value);
-    }
-
-    changeTab(selectedTab) {
-        this.getChartData(selectedTab.tabId);
+        this.getChartData('flow');
+        this.getChartData('weight');
+        this.getChartData('alc');
         this.ordersChart.resizeChart();
     }
 
@@ -76,6 +85,15 @@ export class DistillationProcedureDetailComponent implements OnInit, OnDestroy {
                 .pipe(takeWhile(() => this.alive))
                 .subscribe(chartData => {
                     this.chartData = chartData;
+                    if (type === 'temperature') {
+                        this.chartDataTemperature = this.chartData;
+                    } else if (type === 'flow') {
+                        this.chartDataFlow = this.chartData;
+                    } else if (type === 'weight') {
+                        this.chartDataWeight = this.chartData;
+                    } else if (type === 'alc') {
+                        this.chartDataAlc = this.chartData;
+                    }
                     this.distillationProcedureService.getChartSummary()
                         .pipe(takeWhile(() => this.alive))
                         .subscribe((summary) => {
